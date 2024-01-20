@@ -1,5 +1,8 @@
 ﻿namespace BuildYourBowl.Data
 {
+    /// <summary>
+    /// The definition of the GreenChickenBowl class
+    /// </summary>
     public class GreenChickenBowl
     {
         /// <summary>
@@ -68,6 +71,14 @@
                 uint cals = 890;
 
                 //YOU DO THIS: take customizations into account
+                if (!Chicken) cals -= 150;
+                if (!BlackBeans) cals -= 130;
+                if (!Queso) cals -= 110;
+                if (!Veggies) cals -= 20;
+                if (!SourCream) cals -= 100;
+                if (!GreenSalsa) cals -= 20;
+                if (!Guacamole) cals -= 150;
+
 
                 return cals;
             }
@@ -83,6 +94,13 @@
                 List<string> instructions = new();
 
                 //YOU DO THIS: take customizations into account
+                if (!Chicken) instructions.Add("Hold Chicken");
+                if (!BlackBeans) instructions.Add("Hold Black Beans");
+                if (!Queso) instructions.Add("Hold Queso");
+                if (!Veggies) instructions.Add("Hold Veggies");
+                if (!SourCream) instructions.Add("Hold Sour Cream");
+                if (!GreenSalsa) instructions.Add("Hold Green Salsa");
+                if (!Guacamole) instructions.Add("Hold Guacamole");
 
                 return instructions;
             }
