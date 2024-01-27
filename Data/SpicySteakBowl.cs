@@ -1,17 +1,23 @@
-﻿namespace BuildYourBowl.Data
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BuildYourBowl.Data
 {
     /// <summary>
-    /// The definition of the GreenChickenBowl class
+    /// The definition of the Spicy steak bowl class
     /// </summary>
-    public class GreenChickenBowl
+    public class SpicySteakBowl
     {
         /// <summary>
-        /// The name of the green chicken bowl instance
+        /// The name of the spicy steak bowl instance
         /// </summary>
         /// <remarks>
         /// This is an example of an get-only autoproperty with a default value
         /// </remarks>
-        public string Name { get; } = "Green Chicken Bowl";
+        public string Name { get; } = "Spicy steak Bowl";
 
         /// <summary>
         /// The description of this bowl
@@ -19,71 +25,64 @@
         /// <remarks>
         /// This is also a get-only autoproperty, but it was declared using lambda syntax
         /// </remarks>
-        public string Description => "Rice bowl with chicken and green things";
-
+        public string Description { get; } = "Spicy rice bowl with steak and fajita toppings";
         /// <summary>
-        /// Whether this bowl contains chicken
+        /// Whether this bowl contains steak
         /// </summary>
-        public bool Chicken { get; set; } = true;
-
+        public bool Steak { get; set; } = true;
         /// <summary>
-        /// Whether this bowl contains black beans 
+        /// Whether this bowl contains veggies
         /// </summary>
-        public bool BlackBeans { get; set; } = true;
-
-        /// <summary>
-        /// Whether this bowl contains fajita veggies
-        /// </summary>
-        public bool Veggies { get; set; } = true;
-
+        public bool Veggies { get; set; } = false;
         /// <summary>
         /// Whether this bowl contains queso
         /// </summary>
         public bool Queso { get; set; } = true;
-
         /// <summary>
-        /// Whether this bowl contains green salsa
+        /// Whether this bowl contains hot salsa
         /// </summary>
-        public bool GreenSalsa { get; set; } = true;
-
+        public bool HotSalsa { get; set; } = true;
+        
         /// <summary>
         /// Whether this bowl contains guacamole
         /// </summary>
-        public bool Guacamole { get; set; } = true;
-
+        public bool Guacamole { get; set; } = false;
         /// <summary>
         /// Whether this bowl contains sour cream
         /// </summary>
         public bool SourCream { get; set; } = true;
-
         /// <summary>
-        /// The price of this bowl
+        /// price of this bowl
         /// </summary>
-        public decimal Price => 9.99m;
+        public decimal Price
+        {
+            get
+            {
+                decimal cost = 10.99m;
+                if (Guacamole) cost += 1.00m;
 
+                return cost;
+            }
+        }
         /// <summary>
-        /// The total number of calories in this bowl
+        /// the total number of calories in this bowl
         /// </summary>
         public uint Calories
         {
             get
             {
-                uint cals = 890;
+                uint cals = 620;
 
-                //YOU DO THIS: take customizations into account
-                if (!Chicken) cals -= 150;
-                if (!BlackBeans) cals -= 130;
+                if (!Steak) cals -= 180;
                 if (!Queso) cals -= 110;
-                if (!Veggies) cals -= 20;
+                if (Veggies) cals += 20;
                 if (!SourCream) cals -= 100;
-                if (!GreenSalsa) cals -= 20;
-                if (!Guacamole) cals -= 150;
-
+                if (!HotSalsa) cals -= 20;
+                if (Guacamole) cals += 150;
 
                 return cals;
             }
         }
-
         /// <summary>
         /// Information for the preparation of this bowl
         /// </summary>
@@ -93,17 +92,17 @@
             {
                 List<string> instructions = new();
 
-                //YOU DO THIS: take customizations into account
-                if (!Chicken) instructions.Add("Hold Chicken");
-                if (!BlackBeans) instructions.Add("Hold Black Beans");
+                if (!Steak) instructions.Add("Hold Steak");
                 if (!Queso) instructions.Add("Hold Queso");
-                if (!Veggies) instructions.Add("Hold Veggies");
+                if (Veggies) instructions.Add("Add Veggies");
                 if (!SourCream) instructions.Add("Hold Sour Cream");
-                if (!GreenSalsa) instructions.Add("Hold Green Salsa");
-                if (!Guacamole) instructions.Add("Hold Guacamole");
+                if (!HotSalsa) instructions.Add("Hold Pinto Beans");
+                if (Guacamole) instructions.Add("Add Guacamole");
 
                 return instructions;
             }
         }
+
+
     }
 }
