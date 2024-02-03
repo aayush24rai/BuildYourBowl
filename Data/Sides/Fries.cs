@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BuildYourBowl.Data.Enums;
 
-namespace BuildYourBowl.Data
+namespace BuildYourBowl.Data.Sides
 {
     /// <summary>
-    /// The definition of the street corn class
+    /// The definition of the fries class
     /// </summary>
-    public class StreetCorn
+    public class Fries
     {
         /// <summary>
-        /// The name of the street corn instance
+        /// The name of the fries instance
         /// </summary>
         /// <remarks>
         /// This is an example of an get-only autoproperty with a default value
         /// </remarks>
-        public string Name { get; } = "Street Corn";
+        public string Name { get; } = "Fries";
 
         /// <summary>
         /// The description of this
@@ -25,16 +26,17 @@ namespace BuildYourBowl.Data
         /// <remarks>
         /// This is also a get-only autoproperty, but it was declared using lambda syntax
         /// </remarks>
-        public string Description { get; } = "The zestiest corn out there";
-        /// <summary>
-        /// Whether this contains cotija cheese
-        /// </summary>
-        public bool CotijaCheese { get; set; } = true;
-        /// <summary>
-        /// Whether this contains cilantro
-        /// </summary>
-        public bool Cilantro { get; set; } = true;
+        public string Description { get; } = "Crispy salty sticks of deliciousness";
 
+        /// <summary>
+        /// Propoerty holding the selected size of fries
+        /// </summary>
+        public Size SizeSelection { get; set; } = Size.Medium;
+
+        /// <summary>
+        /// Whether fries are curly or not
+        /// </summary>
+        public bool Curly { get; set; } = false;
 
         /// <summary>
         /// price of this bowl
@@ -43,7 +45,12 @@ namespace BuildYourBowl.Data
         {
             get
             {
-                decimal cost = 4.50m;
+                decimal cost = 3.50m;
+
+                if (SizeSelection == Size.Kids) cost -= 1.00m;
+                if (SizeSelection == Size.Small) cost -= 0.50m;
+                if (SizeSelection == Size.Large) cost += 0.75m;
+
                 return cost;
             }
         }
@@ -54,10 +61,11 @@ namespace BuildYourBowl.Data
         {
             get
             {
-                uint cals = 300;
+                uint cals = 350;
 
-                if (!CotijaCheese) cals -= 80;
-                if (!Cilantro) cals -= 5;
+                if (SizeSelection == Size.Kids) cals = (uint)(0.60 * cals);
+                if (SizeSelection == Size.Small) cals = (uint)(0.75 * cals);
+                if (SizeSelection == Size.Large) cals = (uint)(1.50 * cals);
 
                 return cals;
             }
@@ -71,8 +79,9 @@ namespace BuildYourBowl.Data
             {
                 List<string> instructions = new();
 
-                if (!CotijaCheese) instructions.Add("Hold Cotija Cheese");
-                if (!Cilantro) instructions.Add("Hold Cilantro");
+                instructions.Add($"{SizeSelection}");
+
+                if (Curly) instructions.Add("Add Curly");
 
                 return instructions;
             }

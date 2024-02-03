@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BuildYourBowl.Data.Enums;
 
-namespace BuildYourBowl.Data
+namespace BuildYourBowl.Data.Entrees
 {
     /// <summary>
     /// The definition of the Spicy steak bowl class
@@ -39,10 +40,10 @@ namespace BuildYourBowl.Data
         /// </summary>
         public bool Queso { get; set; } = true;
         /// <summary>
-        /// Whether this bowl contains hot salsa
+        /// Property holding the selected salsa in this bowl
         /// </summary>
-        public bool HotSalsa { get; set; } = true;
-        
+        public Salsa SalsaSelection { get; set; } = Salsa.Hot;
+
         /// <summary>
         /// Whether this bowl contains guacamole
         /// </summary>
@@ -77,7 +78,7 @@ namespace BuildYourBowl.Data
                 if (!Queso) cals -= 110;
                 if (Veggies) cals += 20;
                 if (!SourCream) cals -= 100;
-                if (!HotSalsa) cals -= 20;
+                if (SalsaSelection == Salsa.None) cals -= 20;
                 if (Guacamole) cals += 150;
 
                 return cals;
@@ -96,7 +97,8 @@ namespace BuildYourBowl.Data
                 if (!Queso) instructions.Add("Hold Queso");
                 if (Veggies) instructions.Add("Add Veggies");
                 if (!SourCream) instructions.Add("Hold Sour Cream");
-                if (!HotSalsa) instructions.Add("Hold Pinto Beans");
+                if (SalsaSelection != Salsa.Hot) instructions.Add($"Swap {SalsaSelection} Salsa");
+                else if (SalsaSelection == Salsa.None) instructions.Add("Hold Salsa");
                 if (Guacamole) instructions.Add("Add Guacamole");
 
                 return instructions;

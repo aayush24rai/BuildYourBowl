@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BuildYourBowl.Data.Enums;
 
-namespace BuildYourBowl.Data
+namespace BuildYourBowl.Data.Entrees
 {
     /// <summary>
     /// The definition of the Carnitas class
@@ -42,10 +43,11 @@ namespace BuildYourBowl.Data
         /// Whether this bowl contains pinto beans
         /// </summary>
         public bool PintoBeans { get; set; } = true;
+
         /// <summary>
-        /// Whether this bowl contains medium salsa
+        /// Propoerty giving the type of salsa currently in menu selection for the bowl
         /// </summary>
-        public bool MediumSalsa { get; set; } = true;
+        public Salsa SalsaSelection { get; set; } = Salsa.Medium;
         /// <summary>
         /// Whether this bowl contains guacamole
         /// </summary>
@@ -58,7 +60,7 @@ namespace BuildYourBowl.Data
         /// price of this bowl
         /// </summary>
         public decimal Price
-        { 
+        {
             get
             {
                 decimal cost = 9.99m;
@@ -70,8 +72,8 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// the total number of calories in this bowl
         /// </summary>
-        public uint Calories 
-        { 
+        public uint Calories
+        {
             get
             {
                 uint cals = 680;
@@ -80,7 +82,7 @@ namespace BuildYourBowl.Data
                 if (!Queso) cals -= 110;
                 if (Veggies) cals += 20;
                 if (SourCream) cals += 100;
-                if (!MediumSalsa) cals -= 20;
+                if (SalsaSelection == Salsa.None) cals -= 20;
                 if (!PintoBeans) cals -= 130;
                 if (Guacamole) cals += 150;
 
@@ -90,8 +92,8 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// Information for the preparation of this bowl
         /// </summary>
-        public IEnumerable<string> PreparationInformation 
-        { 
+        public IEnumerable<string> PreparationInformation
+        {
             get
             {
                 List<string> instructions = new();
@@ -100,7 +102,8 @@ namespace BuildYourBowl.Data
                 if (!Queso) instructions.Add("Hold Queso");
                 if (Veggies) instructions.Add("Add Veggies");
                 if (SourCream) instructions.Add("Add Sour Cream");
-                if (!MediumSalsa) instructions.Add("Hold Medium Salsa");
+                if (SalsaSelection != Salsa.Medium) instructions.Add($"Swap {SalsaSelection} Salsa");
+                else if (SalsaSelection == Salsa.None) instructions.Add("Hold Salsa");
                 if (!PintoBeans) instructions.Add("Hold Pinto Beans");
                 if (Guacamole) instructions.Add("Add Guacamole");
 

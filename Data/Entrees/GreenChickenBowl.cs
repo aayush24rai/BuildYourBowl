@@ -1,4 +1,6 @@
-﻿namespace BuildYourBowl.Data
+﻿using BuildYourBowl.Data.Enums;
+
+namespace BuildYourBowl.Data.Entrees
 {
     /// <summary>
     /// The definition of the GreenChickenBowl class
@@ -42,9 +44,9 @@
         public bool Queso { get; set; } = true;
 
         /// <summary>
-        /// Whether this bowl contains green salsa
+        /// Property holding the type of salsa used
         /// </summary>
-        public bool GreenSalsa { get; set; } = true;
+        public Salsa SalsaSelection { get; set; } = Salsa.Green;
 
         /// <summary>
         /// Whether this bowl contains guacamole
@@ -76,7 +78,7 @@
                 if (!Queso) cals -= 110;
                 if (!Veggies) cals -= 20;
                 if (!SourCream) cals -= 100;
-                if (!GreenSalsa) cals -= 20;
+                if (SalsaSelection == Salsa.None) cals -= 20;
                 if (!Guacamole) cals -= 150;
 
 
@@ -99,7 +101,8 @@
                 if (!Queso) instructions.Add("Hold Queso");
                 if (!Veggies) instructions.Add("Hold Veggies");
                 if (!SourCream) instructions.Add("Hold Sour Cream");
-                if (!GreenSalsa) instructions.Add("Hold Green Salsa");
+                if (SalsaSelection != Salsa.Green) instructions.Add($"Swap {SalsaSelection} Salsa");
+                else if (SalsaSelection == Salsa.None) instructions.Add("Hold Salsa");
                 if (!Guacamole) instructions.Add("Hold Guacamole");
 
                 return instructions;

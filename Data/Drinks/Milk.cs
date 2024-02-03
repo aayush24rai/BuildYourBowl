@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BuildYourBowl.Data.Enums;
 
-namespace BuildYourBowl.Data
+namespace BuildYourBowl.Data.Drinks
 {
     /// <summary>
-    /// The definition of the Refried Beans class
+    /// The definition of the milk class
     /// </summary>
-    public class RefriedBeans
+    public class Milk
     {
         /// <summary>
-        /// The name of the refried beans instance
+        /// The name of the milk instance
         /// </summary>
         /// <remarks>
         /// This is an example of an get-only autoproperty with a default value
         /// </remarks>
-        public string Name { get; } = "Refried Beans";
+        public string Name { get; } = "Milk";
 
         /// <summary>
         /// The description of this 
@@ -25,17 +26,18 @@ namespace BuildYourBowl.Data
         /// <remarks>
         /// This is also a get-only autoproperty, but it was declared using lambda syntax
         /// </remarks>
-        public string Description { get; } = "Beans fried not just once but twice";
-        /// <summary>
-        /// Whether this contains onions
-        /// </summary>
-        public bool Onions { get; set; } = true;
-        /// <summary>
-        /// Whether this contains cheddar cheese
-        /// </summary>
-        public bool CheddarCheese { get; set; } = true;
+        public string Description { get; } = "Creamy beverage in plain or chocolate";
 
-     
+        /// <summary>
+        /// Propoerty holding the selected size of fries
+        /// </summary>
+        public Size SizeSelection { get; } = Size.Kids;
+
+        /// <summary>
+        /// Whether milk is in chocolate flavor or not
+        /// </summary>
+        public bool Chocolate { get; set; } = false;
+
         /// <summary>
         /// price of this bowl
         /// </summary>
@@ -43,27 +45,26 @@ namespace BuildYourBowl.Data
         {
             get
             {
-                decimal cost = 3.75m;
+                decimal cost = 2.50m;
                 return cost;
             }
         }
         /// <summary>
-        /// the total number of calories in this
+        /// the total number of calories in this bowl
         /// </summary>
         public uint Calories
         {
             get
             {
-                uint cals = 300;
+                uint cals = 200;
 
-                if (!Onions) cals -= 5;
-                if (!CheddarCheese) cals -= 90;
+                if (Chocolate) cals += 70;
 
                 return cals;
             }
         }
         /// <summary>
-        /// Information for the preparation of this
+        /// Information for the preparation of this bowl
         /// </summary>
         public IEnumerable<string> PreparationInformation
         {
@@ -71,8 +72,7 @@ namespace BuildYourBowl.Data
             {
                 List<string> instructions = new();
 
-                if (!Onions) instructions.Add("Hold Onions");
-                if (!CheddarCheese) instructions.Add("Hold Cheddar Cheese");
+                if (Chocolate) instructions.Add("Chocolate");
 
                 return instructions;
             }

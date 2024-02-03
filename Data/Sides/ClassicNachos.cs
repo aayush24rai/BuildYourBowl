@@ -3,88 +3,90 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BuildYourBowl.Data.Enums;
 
-namespace BuildYourBowl.Data
+namespace BuildYourBowl.Data.Sides
 {
     /// <summary>
-    /// The definition of the Chicken Fajita Nachos class
+    /// The definition of the classic nachos class
     /// </summary>
-    public class ChickenFajitaNachos
+    public class ClassicNachos
     {
         /// <summary>
-        /// The name of the chicken fajita nachos instance
+        /// The name of the classic nachos instance
         /// </summary>
         /// <remarks>
         /// This is an example of an get-only autoproperty with a default value
         /// </remarks>
-        public string Name { get; } = "Chicken fajita nachos";
+        public string Name { get; } = "Classic nachos";
 
         /// <summary>
-        /// The description of this bowl
+        /// The description of this 
         /// </summary>
         /// <remarks>
         /// This is also a get-only autoproperty, but it was declared using lambda syntax
         /// </remarks>
-        public string Description { get; } = "Chicken fajitas but with chips";
+        public string Description { get; } = "Standard nachos with steak, chicken, and cheese";
         /// <summary>
-        /// Whether this contains veggies
+        /// Whether this contains steak
         /// </summary>
-        public bool Veggies { get; set; } = true;
+        public bool Steak { get; set; } = true;
         /// <summary>
-        /// Whether this contains chicken
+        /// Whether this  contains chicken
         /// </summary>
         public bool Chicken { get; set; } = true;
         /// <summary>
-        /// Whether this contains queso
+        /// Whether this  contains queso
         /// </summary>
         public bool Queso { get; set; } = true;
+
         /// <summary>
-        /// Whether this contains medium salsa
+        /// Propoerty holding the selected salsa for nachos
         /// </summary>
-        public bool MediumSalsa { get; set; } = true;
+        public Salsa SalsaSelection { get; set; } = Salsa.Medium;
 
         /// <summary>
         /// Whether this contains guacamole
         /// </summary>
         public bool Guacamole { get; set; } = false;
         /// <summary>
-        /// Whether this contains sour cream
+        /// Whether this  contains sour cream
         /// </summary>
-        public bool SourCream { get; set; } = true;
+        public bool SourCream { get; set; } = false;
         /// <summary>
-        /// price of this bowl
+        /// price of this 
         /// </summary>
         public decimal Price
         {
             get
             {
-                decimal cost = 10.99m;
+                decimal cost = 12.99m;
                 if (Guacamole) cost += 1.00m;
 
                 return cost;
             }
         }
         /// <summary>
-        /// the total number of calories in this 
+        /// the total number of calories in this bowl
         /// </summary>
         public uint Calories
         {
             get
             {
-                uint cals = 650;
+                uint cals = 710;
 
-                if (!Veggies) cals -= 20;
+                if (!Steak) cals -= 180;
                 if (!Queso) cals -= 110;
                 if (!Chicken) cals -= 150;
-                if (!SourCream) cals -= 100;
-                if (!MediumSalsa) cals -= 20;
+                if (SourCream) cals += 100;
+                if (SalsaSelection == Salsa.None) cals -= 20;
                 if (Guacamole) cals += 150;
 
                 return cals;
             }
         }
         /// <summary>
-        /// Information for the preparation of this
+        /// Information for the preparation of this 
         /// </summary>
         public IEnumerable<string> PreparationInformation
         {
@@ -92,13 +94,12 @@ namespace BuildYourBowl.Data
             {
                 List<string> instructions = new();
 
-                if (!Veggies) instructions.Add("Hold Veggies");
+                if (!Steak) instructions.Add("Hold Steak");
                 if (!Queso) instructions.Add("Hold Queso");
                 if (!Chicken) instructions.Add("Hold Chicken");
-                if (!SourCream) instructions.Add("Hold Sour Cream");
-                if (!MediumSalsa) instructions.Add("Hold Medium Salsa");
-                if (Guacamole) instructions.Add("Add Guacamole");
-
+                if (SourCream) instructions.Add("Add Sour Cream");
+                if (SalsaSelection != Salsa.Medium) instructions.Add($"Swap {SalsaSelection} Salsa");
+                else if (SalsaSelection == Salsa.None) instructions.Add("Hold Salsa"); if (Guacamole) instructions.Add("Add Guacamole");
                 return instructions;
             }
         }

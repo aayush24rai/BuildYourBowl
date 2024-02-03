@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BuildYourBowl.Data.Enums;
 
-namespace BuildYourBowl.Data
+namespace BuildYourBowl.Data.Drinks
 {
     /// <summary>
     /// The definition of the horchata class
@@ -26,6 +27,12 @@ namespace BuildYourBowl.Data
         /// This is also a get-only autoproperty, but it was declared using lambda syntax
         /// </remarks>
         public string Description { get; } = "Milky drink with cinnamon";
+
+        /// <summary>
+        /// Propoerty holding the selected size of fries
+        /// </summary>
+        public Size SizeSelection { get; set; } = Size.Medium;
+
         /// <summary>
         /// Whether there is ice or not
         /// </summary>
@@ -39,6 +46,11 @@ namespace BuildYourBowl.Data
             get
             {
                 decimal cost = 3.50m;
+
+                if (SizeSelection == Size.Kids) cost -= 1.00m;
+                if (SizeSelection == Size.Small) cost -= 0.50m;
+                if (SizeSelection == Size.Large) cost += 0.75m;
+
                 return cost;
             }
         }
@@ -51,6 +63,12 @@ namespace BuildYourBowl.Data
             {
                 uint cals = 280;
 
+                if (!Ice) cals -= 30;
+
+                if (SizeSelection == Size.Kids) cals = (uint)(0.60 * cals);
+                if (SizeSelection == Size.Small) cals = (uint)(0.75 * cals);
+                if (SizeSelection == Size.Large) cals = (uint)(1.50 * cals);
+
                 return cals;
             }
         }
@@ -62,6 +80,8 @@ namespace BuildYourBowl.Data
             get
             {
                 List<string> instructions = new();
+
+                instructions.Add($"{SizeSelection}");
 
                 if (!Ice) instructions.Add("Hold Ice");
 
