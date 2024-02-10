@@ -71,7 +71,7 @@ namespace BuildYourBowl.Data.Drinks
             {
                 uint cals = 0;
 
-                if (DrinkFlavor == Flavor.Limonada || DrinkFlavor == Flavor.Limonada) cals = 125;
+                if (DrinkFlavor == Flavor.Limonada || DrinkFlavor == Flavor.Lime) cals = 125;
                 if (DrinkFlavor == Flavor.Tamarind || DrinkFlavor == Flavor.Strawberry) cals = 150;
                 if (DrinkFlavor == Flavor.Cucumber) cals = 75;
 

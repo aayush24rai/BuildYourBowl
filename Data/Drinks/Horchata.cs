@@ -21,7 +21,7 @@ namespace BuildYourBowl.Data.Drinks
         public string Name { get; } = "Horchata";
 
         /// <summary>
-        /// The description of this
+        /// The description of this drink
         /// </summary>
         /// <remarks>
         /// This is also a get-only autoproperty, but it was declared using lambda syntax
@@ -39,7 +39,7 @@ namespace BuildYourBowl.Data.Drinks
         public bool Ice { get; set; } = true;
 
         /// <summary>
-        /// price of this bowl
+        /// price of this drink
         /// </summary>
         public decimal Price
         {
@@ -55,7 +55,7 @@ namespace BuildYourBowl.Data.Drinks
             }
         }
         /// <summary>
-        /// the total number of calories in this bowl
+        /// the total number of calories in this drink
         /// </summary>
         public uint Calories
         {
@@ -73,7 +73,7 @@ namespace BuildYourBowl.Data.Drinks
             }
         }
         /// <summary>
-        /// Information for the preparation of this bowl
+        /// Information for the preparation of this drink
         /// </summary>
         public IEnumerable<string> PreparationInformation
         {

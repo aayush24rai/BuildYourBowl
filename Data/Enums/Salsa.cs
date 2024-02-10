@@ -15,6 +15,6 @@ namespace BuildYourBowl.Data.Enums
         Medium,
         Hot,
         Green,
-        None,
+        None
     }
 }

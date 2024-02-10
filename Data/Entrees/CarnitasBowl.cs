@@ -102,8 +102,8 @@ namespace BuildYourBowl.Data.Entrees
                 if (!Queso) instructions.Add("Hold Queso");
                 if (Veggies) instructions.Add("Add Veggies");
                 if (SourCream) instructions.Add("Add Sour Cream");
-                if (SalsaSelection != Salsa.Medium) instructions.Add($"Swap {SalsaSelection} Salsa");
-                else if (SalsaSelection == Salsa.None) instructions.Add("Hold Salsa");
+                if (SalsaSelection == Salsa.None) instructions.Add("Hold Salsa");
+                else if (SalsaSelection != Salsa.Medium) instructions.Add($"Swap {SalsaSelection} Salsa");
                 if (!PintoBeans) instructions.Add("Hold Pinto Beans");
                 if (Guacamole) instructions.Add("Add Guacamole");
 

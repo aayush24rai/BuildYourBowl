@@ -97,8 +97,8 @@ namespace BuildYourBowl.Data.Entrees
                 if (!Queso) instructions.Add("Hold Queso");
                 if (Veggies) instructions.Add("Add Veggies");
                 if (!SourCream) instructions.Add("Hold Sour Cream");
-                if (SalsaSelection != Salsa.Hot) instructions.Add($"Swap {SalsaSelection} Salsa");
-                else if (SalsaSelection == Salsa.None) instructions.Add("Hold Salsa");
+                if (SalsaSelection == Salsa.None) instructions.Add("Hold Salsa");
+                else if (SalsaSelection != Salsa.Hot) instructions.Add($"Swap {SalsaSelection} Salsa");
                 if (Guacamole) instructions.Add("Add Guacamole");
 
                 return instructions;

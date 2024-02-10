@@ -10,33 +10,33 @@ using BuildYourBowl.Data.Sides;
 namespace BuildYourBowl.Data
 {
     /// <summary>
-    /// The definition of the Sliders Meal instance
+    /// Definition of the chicken nuggets meal instance
     /// </summary>
-    public class SlidersMeal
+    public class ChickenNuggetsMeal
     {
         /// <summary>
-        /// The name of the Sliders Meal instance
+        /// The name of the chicken nuggets meal
         /// </summary>
         /// <remarks>
         /// This is an example of an get-only autoproperty with a default value
         /// </remarks>
-        public string Name { get; } = "Sliders Kids Meal";
+        public string Name { get; } = "Chicken Nuggets Kids Meal";
 
         /// <summary>
-        /// The description of this meal
+        /// The description of the nuggets meal
         /// </summary>
         /// <remarks>
         /// This is also a get-only autoproperty, but it was declared using lambda syntax
         /// </remarks>
-        public string Description { get; } = "Sliders with side and drink";
+        public string Description { get; } = "Chicken nuggets with side and drink";
 
         /// <summary>
         /// Private backing field for the count property
         /// </summary>
-        private uint _count = 2;
-
+        private uint _count = 5;
+        
         /// <summary>
-        /// Number of sliders in the meal
+        /// Number of chicken nuggets in the meal
         /// </summary>
         public uint Count
         {
@@ -44,16 +44,11 @@ namespace BuildYourBowl.Data
 
             set
             {
-                if (value <= 2) _count = 2;
-                else if (value >= 4) _count = 4;
+                if (value <= 5) _count = 5;
+                else if (value >= 8) _count = 8;
                 else _count = value;
             }
         }
-
-        /// <summary>
-        /// Whether the slider contains american cheese or not
-        /// </summary>
-        public bool AmericanCheese { get; set; } = true;
 
         /// <summary>
         /// Private backing field for the choice of drink propeorty
@@ -72,11 +67,11 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// private backing field for the side choice property
         /// </summary>
-        private Fries _sideChoice = new Fries { SizeSelection = Size.Kids };
+        private Fries _sideChoice = new Fries { SizeSelection = Size.Kids};        
 
         /// <summary>
-        /// the side choice of the sliders meal
-        /// </summary>
+        /// the side choice of the chicken nuggets meal
+        /// </summary>  
         public Fries SideChoice
         {
             get => _sideChoice;
@@ -92,7 +87,7 @@ namespace BuildYourBowl.Data
             {
                 decimal cost = 5.99m;
 
-                if (Count > 2) cost += 2.00m * (Count - 2);
+                if (Count > 5) cost += (0.75m * (Count - 5));
 
                 if (DrinkChoice.SizeSelection == Size.Small) cost += 0.50m;
                 if (DrinkChoice.SizeSelection == Size.Medium) cost += 1.00m;
@@ -113,9 +108,7 @@ namespace BuildYourBowl.Data
         {
             get
             {
-                uint cals = 150 * Count;
-
-                if (!AmericanCheese) cals -= 40;
+                uint cals = 60 * Count;
 
                 cals += DrinkChoice.Calories;
                 cals += SideChoice.Calories;
@@ -125,7 +118,7 @@ namespace BuildYourBowl.Data
         }
 
         /// <summary>
-        /// Information for the preparation of the sliders Meal
+        /// Information for the preparation of the Chicken Nuggets Meal
         /// </summary>
         public IEnumerable<string> PreparationInformation
         {
@@ -133,12 +126,10 @@ namespace BuildYourBowl.Data
             {
                 List<string> instructions = new();
 
-                if (Count != 2) instructions.Add($"{Count} Sliders");
-                if (!AmericanCheese) instructions.Add($"Hold American Cheese");
+                if (Count != 5) instructions.Add($"{Count} Nuggets");
 
                 return instructions;
             }
         }
-
     }
 }

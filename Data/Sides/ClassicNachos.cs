@@ -98,8 +98,9 @@ namespace BuildYourBowl.Data.Sides
                 if (!Queso) instructions.Add("Hold Queso");
                 if (!Chicken) instructions.Add("Hold Chicken");
                 if (SourCream) instructions.Add("Add Sour Cream");
-                if (SalsaSelection != Salsa.Medium) instructions.Add($"Swap {SalsaSelection} Salsa");
-                else if (SalsaSelection == Salsa.None) instructions.Add("Hold Salsa"); if (Guacamole) instructions.Add("Add Guacamole");
+                if (Guacamole) instructions.Add("Add Guacamole");
+                if (SalsaSelection == Salsa.None) instructions.Add("Hold Salsa"); 
+                else if (SalsaSelection != Salsa.Medium) instructions.Add($"Swap {SalsaSelection} Salsa");
                 return instructions;
             }
         }

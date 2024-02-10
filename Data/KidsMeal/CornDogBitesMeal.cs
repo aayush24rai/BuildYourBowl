@@ -33,7 +33,7 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// Private backing field for the count property
         /// </summary>
-        private uint _count = 2;
+        private uint _count = 5;
 
         /// <summary>
         /// Number of corn dog bites in the meal
@@ -87,7 +87,7 @@ namespace BuildYourBowl.Data
             {
                 decimal cost = 5.99m;
 
-                if (Count > 2) cost += 0.75m * (Count - 5);
+                if (Count > 5) cost += 0.75m * (Count - 5);
 
                 if (DrinkChoice.SizeSelection == Size.Small) cost += 0.50m;
                 if (DrinkChoice.SizeSelection == Size.Medium) cost += 1.00m;
@@ -126,7 +126,7 @@ namespace BuildYourBowl.Data
             {
                 List<string> instructions = new();
 
-                if (Count != 2) instructions.Add($"{Count} Sliders");
+                if (Count != 5) instructions.Add($"{Count} Bites");
 
                 return instructions;
             }
