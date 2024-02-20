@@ -19,7 +19,7 @@ namespace BuildYourBowl.DataTests.DrinksTests
         {
             AguaFresca drink = new();
             Assert.Equal(Flavor.Limonada, drink.DrinkFlavor);
-            Assert.Equal(Size.Medium, drink.DrinkSize);
+            Assert.Equal(Size.Medium, drink.SizeChoice);
             Assert.True(drink.Ice);
 
         }
@@ -45,14 +45,14 @@ namespace BuildYourBowl.DataTests.DrinksTests
             AguaFresca drink = new();
             drink.Ice = ice;
             drink.DrinkFlavor = drinkFlavor;
-            drink.DrinkSize = drinkSize;
+            drink.SizeChoice = drinkSize;
 
             foreach (string instruction in prepInfo)
             {
-                Assert.Contains(instruction, drink.PreparationInformation);
+                Assert.Contains(instruction, drink.Instructions);
             }
 
-            Assert.Equal(prepInfo.Length, drink.PreparationInformation.Count());
+            Assert.Equal(prepInfo.Length, drink.Instructions.Count());
         }
 
 
@@ -78,7 +78,7 @@ namespace BuildYourBowl.DataTests.DrinksTests
             AguaFresca drink = new();
             drink.Ice = ice;
             drink.DrinkFlavor = drinkFlavor;
-            drink.DrinkSize = drinkSize;
+            drink.SizeChoice = drinkSize;
 
             Assert.Equal(price, drink.Price);
         }
@@ -104,7 +104,7 @@ namespace BuildYourBowl.DataTests.DrinksTests
             AguaFresca drink = new();
             drink.Ice = ice;
             drink.DrinkFlavor = drinkFlavor;
-            drink.DrinkSize = drinkSize;
+            drink.SizeChoice = drinkSize;
 
             Assert.Equal(cals, drink.Calories);
         }

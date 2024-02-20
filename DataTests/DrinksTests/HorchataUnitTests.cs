@@ -18,7 +18,7 @@ namespace BuildYourBowl.DataTests.DrinksTests
         public void DefaultsTest()
         {
             Horchata drink = new();
-            Assert.Equal(Size.Medium, drink.SizeSelection);
+            Assert.Equal(Size.Medium, drink.SizeChoice);
             Assert.True(drink.Ice);
 
         }
@@ -41,14 +41,14 @@ namespace BuildYourBowl.DataTests.DrinksTests
         {
             Horchata drink = new();
             drink.Ice = ice;
-            drink.SizeSelection = drinkSize;
+            drink.SizeChoice = drinkSize;
 
             foreach (string instruction in prepInfo)
             {
-                Assert.Contains(instruction, drink.PreparationInformation);
+                Assert.Contains(instruction, drink.Instructions);
             }
 
-            Assert.Equal(prepInfo.Length, drink.PreparationInformation.Count());
+            Assert.Equal(prepInfo.Length, drink.Instructions.Count());
         }
 
 
@@ -69,7 +69,7 @@ namespace BuildYourBowl.DataTests.DrinksTests
         {
             Horchata drink = new();
             drink.Ice = ice;
-            drink.SizeSelection = drinkSize;
+            drink.SizeChoice = drinkSize;
 
             Assert.Equal(price, drink.Price);
         }
@@ -92,7 +92,7 @@ namespace BuildYourBowl.DataTests.DrinksTests
         {
             Horchata drink = new();
             drink.Ice = ice;
-            drink.SizeSelection = drinkSize;
+            drink.SizeChoice = drinkSize;
 
             Assert.Equal(cals, drink.Calories);
         }

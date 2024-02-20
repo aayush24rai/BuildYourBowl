@@ -10,7 +10,7 @@ namespace BuildYourBowl.Data.Sides
     /// <summary>
     /// The definition of the Refried Beans class
     /// </summary>
-    public class RefriedBeans
+    public class RefriedBeans : Side
     {
         /// <summary>
         /// The name of the refried beans instance
@@ -18,7 +18,7 @@ namespace BuildYourBowl.Data.Sides
         /// <remarks>
         /// This is an example of an get-only autoproperty with a default value
         /// </remarks>
-        public string Name { get; } = "Refried Beans";
+        public override string Name { get; } = "Refried Beans";
 
         /// <summary>
         /// The description of this 
@@ -26,21 +26,39 @@ namespace BuildYourBowl.Data.Sides
         /// <remarks>
         /// This is also a get-only autoproperty, but it was declared using lambda syntax
         /// </remarks>
-        public string Description { get; } = "Beans fried not just once but twice";
+        public override string Description { get; } = "Beans fried not just once but twice";
+
+        /// <summary>
+        /// Constructor for this side
+        /// </summary>
+        public RefriedBeans()
+        {
+            AdditionalIngredients = new Dictionary<Ingredient, IngredientItem>();
+            AdditionalIngredients.Add(Ingredient.Onions, new IngredientItem(Ingredient.Onions));
+            AdditionalIngredients.Add(Ingredient.CheddarCheese, new IngredientItem(Ingredient.CheddarCheese));
+
+            AdditionalIngredients[Ingredient.Onions].Included = true;
+            AdditionalIngredients[Ingredient.CheddarCheese].Included = true;
+
+            _sizeDefault = Size.Medium;
+            SizeChoice = Size.Medium;
+
+            Price = 3.75m;
+
+
+            if (!AdditionalIngredients[Ingredient.Onions].Included) _calories -= 5;
+            if (!AdditionalIngredients[Ingredient.CheddarCheese].Included) _calories -= 90;
+        }
+
+
+        //Old size selection price cals and prep info
+        /*
+        
         /// <summary>
         /// Propoerty holding the selected size of beans
         /// </summary>
         public Size SizeSelection { get; set; } = Size.Medium;
-        /// <summary>
-        /// Whether this contains onions
-        /// </summary>
-        public bool Onions { get; set; } = true;
-        /// <summary>
-        /// Whether this contains cheddar cheese
-        /// </summary>
-        public bool CheddarCheese { get; set; } = true;
-
-
+        
         /// <summary>
         /// price of this bowl
         /// </summary>
@@ -57,42 +75,46 @@ namespace BuildYourBowl.Data.Sides
                 return cost;
             }
         }
+        */
         /// <summary>
         /// the total number of calories in this
         /// </summary>
-        public uint Calories
+        public override uint Calories
         {
             get
             {
                 uint cals = 300;
 
-                if (!Onions) cals -= 5;
-                if (!CheddarCheese) cals -= 90;
+                if (!AdditionalIngredients[Ingredient.Onions].Included) cals -= 5;
+                if (!AdditionalIngredients[Ingredient.CheddarCheese].Included) cals -= 90;
 
-                if (SizeSelection == Size.Kids) cals = (uint)(0.60 * cals);
-                if (SizeSelection == Size.Small) cals = (uint)(0.75 * cals);
-                if (SizeSelection == Size.Large) cals = (uint)(1.50 * cals);
+                if (SizeChoice == Size.Kids) cals = (uint)(0.60 * cals);
+                if (SizeChoice == Size.Small) cals = (uint)(0.75 * cals);
+                if (SizeChoice == Size.Large) cals = (uint)(1.50 * cals);
 
                 return cals;
             }
         }
+        
+
         /// <summary>
         /// Information for the preparation of this
         /// </summary>
-        public IEnumerable<string> PreparationInformation
+        public override IEnumerable<string> Instructions
         {
             get
             {
                 List<string> instructions = new();
 
-                instructions.Add($"{SizeSelection}");
+                instructions.Add($"{SizeChoice}");
 
 
-                if (!Onions) instructions.Add("Hold Onions");
-                if (!CheddarCheese) instructions.Add("Hold Cheddar Cheese");
+                if (!AdditionalIngredients[Ingredient.Onions].Included) instructions.Add("Hold Onions");
+                if (!AdditionalIngredients[Ingredient.CheddarCheese].Included) instructions.Add("Hold Cheddar Cheese");
 
                 return instructions;
             }
         }
+        
     }
 }

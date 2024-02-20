@@ -10,7 +10,7 @@ namespace BuildYourBowl.Data.Drinks
     /// <summary>
     /// The defintion of the Agua fresca class
     /// </summary>
-    public class AguaFresca
+    public class AguaFresca : Drink
     {
         /// <summary>
         /// The name of the agua fresca instance
@@ -18,7 +18,7 @@ namespace BuildYourBowl.Data.Drinks
         /// <remarks>
         /// This is an example of an get-only autoproperty with a default value
         /// </remarks>
-        public string Name { get; } = "Agua Fresca";
+        public override string Name { get; } = "Agua Fresca";
 
         /// <summary>
         /// The description of the drink
@@ -26,17 +26,28 @@ namespace BuildYourBowl.Data.Drinks
         /// <remarks>
         /// This is also a get-only autoproperty, but it was declared using lambda syntax
         /// </remarks>
-        public string Description { get; } = "Refreshing lightly sweetened fruit drink";
+        public override string Description { get; } = "Refreshing lightly sweetened fruit drink";
+
+        /// <summary>
+        /// Constructor for the AguaFresca class
+        /// </summary>
+        public AguaFresca() 
+        {
+            _sizeDefault = Size.Medium;
+            SizeChoice = Size.Medium;
+        }
 
         /// <summary>
         /// Propoerty holding the current selection for the flavor of the agua fresca
         /// </summary>
         public Flavor DrinkFlavor { get; set; } = Flavor.Limonada;
 
+        /*
         /// <summary>
         /// Propoerty holding the current selection of size for the agua fresca
         /// </summary>
         public Size DrinkSize { get; set; } = Size.Medium;
+        */
 
         /// <summary>
         /// Whether the agua fresca contains ice or not
@@ -46,16 +57,16 @@ namespace BuildYourBowl.Data.Drinks
         /// <summary>
         /// the price of the agua fresca drink
         /// </summary>
-        public decimal Price
+        public override decimal Price
         {
             get
             {
                 decimal cost = 0.00m;
 
-                if (DrinkSize == Size.Kids) cost = 2.00m;
-                if (DrinkSize == Size.Small) cost = 2.50m;
-                if (DrinkSize == Size.Medium) cost = 3.00m;
-                if (DrinkSize == Size.Large) cost = 3.75m;
+                if (SizeChoice == Size.Kids) cost = 2.00m;
+                if (SizeChoice == Size.Small) cost = 2.50m;
+                if (SizeChoice == Size.Medium) cost = 3.00m;
+                if (SizeChoice == Size.Large) cost = 3.75m;
                 if (DrinkFlavor == Flavor.Tamarind) cost += 0.50m;
 
                 return cost;
@@ -65,7 +76,7 @@ namespace BuildYourBowl.Data.Drinks
         /// <summary>
         /// The total number of calories in the agua fresca
         /// </summary>
-        public uint Calories
+        public override uint Calories
         {
             get
             {
@@ -77,9 +88,9 @@ namespace BuildYourBowl.Data.Drinks
 
                 if (!Ice) cals += 10;
 
-                if (DrinkSize == Size.Kids) cals = (uint)(cals * 0.60);
-                if (DrinkSize == Size.Small) cals = (uint)(cals * 0.75);
-                if (DrinkSize == Size.Large) cals = (uint)(cals * 1.50);
+                if (SizeChoice == Size.Kids) cals = (uint)(cals * 0.60);
+                if (SizeChoice == Size.Small) cals = (uint)(cals * 0.75);
+                if (SizeChoice == Size.Large) cals = (uint)(cals * 1.50);
 
                 return cals;
             }
@@ -88,13 +99,13 @@ namespace BuildYourBowl.Data.Drinks
         /// <summary>
         /// Information for the preparation of the agua fresca
         /// </summary>
-        public IEnumerable<string> PreparationInformation
+        public override IEnumerable<string> Instructions
         {
             get
             {
                 List<string> instructions = new();
 
-                instructions.Add($"{DrinkSize}");
+                instructions.Add($"{SizeChoice}");
                 instructions.Add($"{DrinkFlavor}");
                 if (!Ice) instructions.Add("Hold Ice");
 

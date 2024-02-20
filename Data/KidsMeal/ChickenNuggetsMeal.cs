@@ -12,7 +12,7 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// Definition of the chicken nuggets meal instance
     /// </summary>
-    public class ChickenNuggetsMeal
+    public class ChickenNuggetsMeal : KidsMeal
     {
         /// <summary>
         /// The name of the chicken nuggets meal
@@ -20,7 +20,7 @@ namespace BuildYourBowl.Data
         /// <remarks>
         /// This is an example of an get-only autoproperty with a default value
         /// </remarks>
-        public string Name { get; } = "Chicken Nuggets Kids Meal";
+        public override string Name { get; } = "Chicken Nuggets Kids Meal";
 
         /// <summary>
         /// The description of the nuggets meal
@@ -28,8 +28,24 @@ namespace BuildYourBowl.Data
         /// <remarks>
         /// This is also a get-only autoproperty, but it was declared using lambda syntax
         /// </remarks>
-        public string Description { get; } = "Chicken nuggets with side and drink";
+        public override string Description { get; } = "Chicken nuggets with side and drink";
 
+        /// <summary>
+        /// Constructor for the chicken nuggets meal
+        /// </summary>
+        public ChickenNuggetsMeal()
+        {
+            _count = 5;
+            Count = 5;
+
+            _drinkDefault.SizeChoice = Size.Kids;
+            DrinkChoice.SizeChoice = Size.Kids;
+            SideChoice.SizeChoice = Size.Kids;
+
+            _defaultUnitCalories = 60;
+        }
+
+        /*
         /// <summary>
         /// Private backing field for the count property
         /// </summary>
@@ -100,11 +116,11 @@ namespace BuildYourBowl.Data
                 return cost;
             }
         }
-
+        */
         /// <summary>
         /// Calories in the meal
         /// </summary>
-        public uint Calories
+        public override uint Calories
         {
             get
             {
@@ -116,11 +132,12 @@ namespace BuildYourBowl.Data
                 return cals;
             }
         }
+        
 
         /// <summary>
         /// Information for the preparation of the Chicken Nuggets Meal
         /// </summary>
-        public IEnumerable<string> PreparationInformation
+        public override IEnumerable<string> Instructions
         {
             get
             {

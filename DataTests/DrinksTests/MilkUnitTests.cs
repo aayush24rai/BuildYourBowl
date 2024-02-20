@@ -18,7 +18,7 @@ namespace BuildYourBowl.DataTests.DrinksTests
         public void DefaultsTest()
         {
             Milk drink = new();
-            Assert.Equal(Size.Kids, drink.SizeSelection);
+            Assert.Equal(Size.Kids, drink.SizeChoice);
             Assert.False(drink.Chocolate);
 
         }
@@ -44,10 +44,10 @@ namespace BuildYourBowl.DataTests.DrinksTests
 
             foreach (string instruction in prepInfo)
             {
-                Assert.Contains(instruction, drink.PreparationInformation);
+                Assert.Contains(instruction, drink.Instructions);
             }
 
-            Assert.Equal(prepInfo.Length, drink.PreparationInformation.Count());
+            Assert.Equal(prepInfo.Length, drink.Instructions.Count());
         }
 
 

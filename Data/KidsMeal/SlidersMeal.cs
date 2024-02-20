@@ -12,7 +12,7 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// The definition of the Sliders Meal instance
     /// </summary>
-    public class SlidersMeal
+    public class SlidersMeal : KidsMeal
     {
         /// <summary>
         /// The name of the Sliders Meal instance
@@ -20,7 +20,7 @@ namespace BuildYourBowl.Data
         /// <remarks>
         /// This is an example of an get-only autoproperty with a default value
         /// </remarks>
-        public string Name { get; } = "Sliders Kids Meal";
+        public override string Name { get; } = "Sliders Kids Meal";
 
         /// <summary>
         /// The description of this meal
@@ -28,17 +28,37 @@ namespace BuildYourBowl.Data
         /// <remarks>
         /// This is also a get-only autoproperty, but it was declared using lambda syntax
         /// </remarks>
-        public string Description { get; } = "Sliders with side and drink";
+        public override string Description { get; } = "Sliders with side and drink";
 
+        /// <summary>
+        /// Whether the slider contains american cheese or not
+        /// </summary>
+        public bool AmericanCheese { get; set; } = true;
+
+        /// <summary>
+        /// Constructor for the sliders meal class
+        /// </summary>
+        public SlidersMeal() 
+        {
+            _count = 2;
+
+            _drinkDefault.SizeChoice = Size.Kids;
+            DrinkChoice.SizeChoice = Size.Kids;
+            SideChoice.SizeChoice = Size.Kids;
+        }
+
+
+        /*
         /// <summary>
         /// Private backing field for the count property
         /// </summary>
         private uint _count = 2;
+        */
 
         /// <summary>
         /// Number of sliders in the meal
         /// </summary>
-        public uint Count
+        public override uint Count
         {
             get => _count;
 
@@ -50,11 +70,7 @@ namespace BuildYourBowl.Data
             }
         }
 
-        /// <summary>
-        /// Whether the slider contains american cheese or not
-        /// </summary>
-        public bool AmericanCheese { get; set; } = true;
-
+        /*
         /// <summary>
         /// Private backing field for the choice of drink propeorty
         /// </summary>
@@ -82,11 +98,12 @@ namespace BuildYourBowl.Data
             get => _sideChoice;
             set => _sideChoice = value;
         }
+        */
 
         /// <summary>
         /// The price of this meal
         /// </summary>
-        public decimal Price
+        public override decimal Price
         {
             get
             {
@@ -94,13 +111,13 @@ namespace BuildYourBowl.Data
 
                 if (Count > 2) cost += 2.00m * (Count - 2);
 
-                if (DrinkChoice.SizeSelection == Size.Small) cost += 0.50m;
-                if (DrinkChoice.SizeSelection == Size.Medium) cost += 1.00m;
-                if (DrinkChoice.SizeSelection == Size.Large) cost += 1.50m;
+                if (DrinkChoice.SizeChoice == Size.Small) cost += 0.50m;
+                if (DrinkChoice.SizeChoice == Size.Medium) cost += 1.00m;
+                if (DrinkChoice.SizeChoice == Size.Large) cost += 1.50m;
 
-                if (SideChoice.SizeSelection == Size.Small) cost += 0.50m;
-                if (SideChoice.SizeSelection == Size.Medium) cost += 1.00m;
-                if (SideChoice.SizeSelection == Size.Large) cost += 1.50m;
+                if (SideChoice.SizeChoice == Size.Small) cost += 0.50m;
+                if (SideChoice.SizeChoice == Size.Medium) cost += 1.00m;
+                if (SideChoice.SizeChoice == Size.Large) cost += 1.50m;
 
                 return cost;
             }
@@ -109,26 +126,24 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// Calories in the meal
         /// </summary>
-        public uint Calories
+        public override uint Calories
         {
             get
             {
-                uint cals;
+                if (AmericanCheese) _defaultUnitCalories = 150 * Count;
+                else _defaultUnitCalories = 110 * Count;
 
-                if (AmericanCheese) cals = 150 * Count;
-                else cals = 110 * Count;
+                _defaultUnitCalories += DrinkChoice.Calories;
+                _defaultUnitCalories += SideChoice.Calories;
 
-                cals += DrinkChoice.Calories;
-                cals += SideChoice.Calories;
-
-                return cals;
+                return _defaultUnitCalories;
             }
         }
 
         /// <summary>
         /// Information for the preparation of the sliders Meal
         /// </summary>
-        public IEnumerable<string> PreparationInformation
+        public override IEnumerable<string> Instructions
         {
             get
             {
@@ -140,6 +155,5 @@ namespace BuildYourBowl.Data
                 return instructions;
             }
         }
-
     }
 }

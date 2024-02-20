@@ -10,7 +10,7 @@ namespace BuildYourBowl.Data.Entrees
     /// <summary>
     /// The definition of the Carnitas class
     /// </summary>
-    public class CarnitasBowl
+    public class CarnitasBowl : Bowl
     {
         /// <summary>
         /// The name of the carnitas bowl instance
@@ -18,7 +18,7 @@ namespace BuildYourBowl.Data.Entrees
         /// <remarks>
         /// This is an example of an get-only autoproperty with a default value
         /// </remarks>
-        public string Name { get; } = "Carnitas Bowl";
+        public override string Name { get; } = "Carnitas Bowl";
 
         /// <summary>
         /// The description of this bowl
@@ -26,49 +26,56 @@ namespace BuildYourBowl.Data.Entrees
         /// <remarks>
         /// This is also a get-only autoproperty, but it was declared using lambda syntax
         /// </remarks>
-        public string Description { get; } = "Rice bowl with carnitas and extras";
+        public override string Description { get; } = "Rice bowl with carnitas and extras";
+        
         /// <summary>
-        /// Whether this bowl contains carnitas
+        /// Constructor for this bowl
         /// </summary>
-        public bool Carnitas { get; set; } = true;
-        /// <summary>
-        /// Whether this bowl contains veggies
-        /// </summary>
-        public bool Veggies { get; set; } = false;
-        /// <summary>
-        /// Whether this bowl contains queso
-        /// </summary>
-        public bool Queso { get; set; } = true;
-        /// <summary>
-        /// Whether this bowl contains pinto beans
-        /// </summary>
-        public bool PintoBeans { get; set; } = true;
+        public CarnitasBowl() 
+        {
+            AdditionalIngredients = new Dictionary<Ingredient, IngredientItem>();
+            AdditionalIngredients.Add(Ingredient.Carnitas, new IngredientItem(Ingredient.Carnitas));
+            AdditionalIngredients.Add(Ingredient.Veggies, new IngredientItem(Ingredient.Veggies));
+            AdditionalIngredients.Add(Ingredient.Queso, new IngredientItem(Ingredient.Queso));
+            AdditionalIngredients.Add(Ingredient.PintoBeans, new IngredientItem(Ingredient.PintoBeans));
+            AdditionalIngredients.Add(Ingredient.Guacamole, new IngredientItem(Ingredient.Guacamole));
+            AdditionalIngredients.Add(Ingredient.SourCream, new IngredientItem(Ingredient.SourCream));
 
+            AdditionalIngredients[Ingredient.Carnitas].Included = true;
+            AdditionalIngredients[Ingredient.Veggies].Included = false;
+            AdditionalIngredients[Ingredient.Queso].Included = true;
+            AdditionalIngredients[Ingredient.PintoBeans].Included = true;
+            AdditionalIngredients[Ingredient.Guacamole].Included = false;
+            AdditionalIngredients[Ingredient.SourCream].Included = false;
+
+            _salsaDefault = Salsa.Medium;
+            SalsaType = Salsa.Medium;
+        }
+
+        //Salsa here
+        /*        
         /// <summary>
-        /// Propoerty giving the type of salsa currently in menu selection for the bowl
+        /// Property giving the type of salsa currently in menu selection for the bowl
         /// </summary>
         public Salsa SalsaSelection { get; set; } = Salsa.Medium;
-        /// <summary>
-        /// Whether this bowl contains guacamole
-        /// </summary>
-        public bool Guacamole { get; set; } = false;
-        /// <summary>
-        /// Whether this bowl contains sour cream
-        /// </summary>
-        public bool SourCream { get; set; } = false;
+        */
+
         /// <summary>
         /// price of this bowl
         /// </summary>
-        public decimal Price
+        public override decimal Price
         {
             get
             {
                 decimal cost = 9.99m;
-                if (Guacamole) cost += 1.00m;
+                if (AdditionalIngredients[Ingredient.Guacamole].Included) cost += 1.00m;
 
                 return cost;
             }
         }
+        
+        //Calories here
+        /*
         /// <summary>
         /// the total number of calories in this bowl
         /// </summary>
@@ -89,28 +96,32 @@ namespace BuildYourBowl.Data.Entrees
                 return cals;
             }
         }
+        */
+
+        //Preparation Info here
+        
         /// <summary>
         /// Information for the preparation of this bowl
         /// </summary>
-        public IEnumerable<string> PreparationInformation
+        public override IEnumerable<string> Instructions
         {
             get
             {
                 List<string> instructions = new();
 
-                if (!Carnitas) instructions.Add("Hold Carnitas");
-                if (!Queso) instructions.Add("Hold Queso");
-                if (Veggies) instructions.Add("Add Veggies");
-                if (SourCream) instructions.Add("Add Sour Cream");
-                if (SalsaSelection == Salsa.None) instructions.Add("Hold Salsa");
-                else if (SalsaSelection != Salsa.Medium) instructions.Add($"Swap {SalsaSelection} Salsa");
-                if (!PintoBeans) instructions.Add("Hold Pinto Beans");
-                if (Guacamole) instructions.Add("Add Guacamole");
+                if (!AdditionalIngredients[Ingredient.Carnitas].Included) instructions.Add("Hold Carnitas");
+                if (!AdditionalIngredients[Ingredient.Queso].Included) instructions.Add("Hold Queso");
+                if (AdditionalIngredients[Ingredient.Veggies].Included) instructions.Add("Add Veggies");
+                if (AdditionalIngredients[Ingredient.SourCream].Included) instructions.Add("Add Sour Cream");
+                if (SalsaType == Salsa.None) instructions.Add("Hold Salsa");
+                else if (SalsaType != Salsa.Medium) instructions.Add($"Swap {SalsaType} Salsa");
+                if (!AdditionalIngredients[Ingredient.PintoBeans].Included) instructions.Add("Hold Pinto Beans");
+                if (AdditionalIngredients[Ingredient.Guacamole].Included) instructions.Add("Add Guacamole");
 
                 return instructions;
             }
         }
-
+        
 
     }
 }

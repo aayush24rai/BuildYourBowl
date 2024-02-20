@@ -10,7 +10,7 @@ namespace BuildYourBowl.Data.Sides
     /// <summary>
     /// The definition of the street corn class
     /// </summary>
-    public class StreetCorn
+    public class StreetCorn : Side
     {
         /// <summary>
         /// The name of the street corn instance
@@ -18,7 +18,7 @@ namespace BuildYourBowl.Data.Sides
         /// <remarks>
         /// This is an example of an get-only autoproperty with a default value
         /// </remarks>
-        public string Name { get; } = "Street Corn";
+        public override string Name { get; } = "Street Corn";
 
         /// <summary>
         /// The description of this
@@ -26,8 +26,31 @@ namespace BuildYourBowl.Data.Sides
         /// <remarks>
         /// This is also a get-only autoproperty, but it was declared using lambda syntax
         /// </remarks>
-        public string Description { get; } = "The zestiest corn out there";
+        public override string Description { get; } = "The zestiest corn out there";
 
+        /// <summary>
+        /// Constructor for this side
+        /// </summary>
+        public StreetCorn()
+        {
+            AdditionalIngredients = new Dictionary<Ingredient, IngredientItem>();
+            AdditionalIngredients.Add(Ingredient.CotijaCheese, new IngredientItem(Ingredient.CotijaCheese));
+            AdditionalIngredients.Add(Ingredient.Cilantro, new IngredientItem(Ingredient.Cilantro));
+
+            AdditionalIngredients[Ingredient.CotijaCheese].Included = true;
+            AdditionalIngredients[Ingredient.Cilantro].Included = true;
+
+            _sizeDefault = Size.Medium;
+            SizeChoice = Size.Medium;
+
+            Price = 4.50m;
+
+            if (!AdditionalIngredients[Ingredient.CotijaCheese].Included) Calories -= 80;
+            if (!AdditionalIngredients[Ingredient.Cilantro].Included) Calories -= 5;
+        }
+
+        //Old size price cals and prep info
+        /*
         /// <summary>
         /// Propoerty holding the selected size of fries
         /// </summary>
@@ -43,58 +66,62 @@ namespace BuildYourBowl.Data.Sides
         /// </summary>
         public bool Cilantro { get; set; } = true;
 
-
+        */
         /// <summary>
         /// price of this bowl
         /// </summary>
-        public decimal Price
+        public override decimal Price
         {
             get
             {
                 decimal cost = 4.50m;
 
-                if (SizeSelection == Size.Kids) cost -= 1.25m;
-                if (SizeSelection == Size.Small) cost -= 0.75m;
-                if (SizeSelection == Size.Large) cost += 1.00m;
+                if (SizeChoice == Size.Kids) cost -= 1.25m;
+                if (SizeChoice == Size.Small) cost -= 0.75m;
+                if (SizeChoice == Size.Large) cost += 1.00m;
 
                 return cost;
             }
         }
+        
         /// <summary>
         /// the total number of calories in this bowl
         /// </summary>
-        public uint Calories
+        public override uint Calories
         {
             get
             {
                 uint cals = 300;
 
-                if (!CotijaCheese) cals -= 80;
-                if (!Cilantro) cals -= 5;
+                if (!AdditionalIngredients[Ingredient.CotijaCheese].Included) cals -= 80;
+                if (!AdditionalIngredients[Ingredient.Cilantro].Included) cals -= 5;
 
-                if (SizeSelection == Size.Kids) cals = (uint)(0.60 * cals);
-                if (SizeSelection == Size.Small) cals = (uint)(0.75 * cals);
-                if (SizeSelection == Size.Large) cals = (uint)(1.50 * cals);
+                if (SizeChoice == Size.Kids) cals = (uint)(0.60 * cals);
+                if (SizeChoice == Size.Small) cals = (uint)(0.75 * cals);
+                if (SizeChoice == Size.Large) cals = (uint)(1.50 * cals);
 
                 return cals;
             }
         }
+        
+
         /// <summary>
         /// Information for the preparation of this bowl
         /// </summary>
-        public IEnumerable<string> PreparationInformation
+        public override IEnumerable<string> Instructions
         {
             get
             {
                 List<string> instructions = new();
 
-                instructions.Add($"{SizeSelection}");
+                instructions.Add($"{SizeChoice}");
 
-                if (!CotijaCheese) instructions.Add("Hold Cotija Cheese");
-                if (!Cilantro) instructions.Add("Hold Cilantro");
+                if (!AdditionalIngredients[Ingredient.CotijaCheese].Included) instructions.Add("Hold Cotija Cheese");
+                if (!AdditionalIngredients[Ingredient.Cilantro].Included) instructions.Add("Hold Cilantro");
 
                 return instructions;
             }
         }
+        
     }
 }

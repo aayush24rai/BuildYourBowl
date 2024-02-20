@@ -8,17 +8,17 @@ using BuildYourBowl.Data.Enums;
 namespace BuildYourBowl.Data.Entrees
 {
     /// <summary>
-    /// The definition of the Spicy steak bowl class
+    /// The definition of the Chicken Fajita Nachos class
     /// </summary>
-    public class SpicySteakBowl : Bowl
+    public class ChickenFajitaNachos : Nachos
     {
         /// <summary>
-        /// The name of the spicy steak bowl instance
+        /// The name of the chicken fajita nachos instance
         /// </summary>
         /// <remarks>
         /// This is an example of an get-only autoproperty with a default value
         /// </remarks>
-        public override string Name { get; } = "Spicy steak Bowl";
+        public override string Name { get; } = "Chicken fajita nachos";
 
         /// <summary>
         /// The description of this bowl
@@ -26,39 +26,38 @@ namespace BuildYourBowl.Data.Entrees
         /// <remarks>
         /// This is also a get-only autoproperty, but it was declared using lambda syntax
         /// </remarks>
-        public override string Description { get; } = "Spicy rice bowl with steak and fajita toppings";
+        public override string Description { get; } = "Chicken fajitas but with chips";
 
         /// <summary>
-        /// Constructor for this bowl
+        /// Constructor for nachos
         /// </summary>
-        public SpicySteakBowl()
+        public ChickenFajitaNachos()
         {
             AdditionalIngredients = new Dictionary<Ingredient, IngredientItem>();
-            AdditionalIngredients.Add(Ingredient.Steak, new IngredientItem(Ingredient.Steak));
+            AdditionalIngredients.Add(Ingredient.Chicken, new IngredientItem(Ingredient.Chicken));
             AdditionalIngredients.Add(Ingredient.Veggies, new IngredientItem(Ingredient.Veggies));
             AdditionalIngredients.Add(Ingredient.Queso, new IngredientItem(Ingredient.Queso));
-            AdditionalIngredients.Add(Ingredient.PintoBeans, new IngredientItem(Ingredient.PintoBeans));
             AdditionalIngredients.Add(Ingredient.Guacamole, new IngredientItem(Ingredient.Guacamole));
             AdditionalIngredients.Add(Ingredient.SourCream, new IngredientItem(Ingredient.SourCream));
 
-            AdditionalIngredients[Ingredient.Steak].Included = true;
-            AdditionalIngredients[Ingredient.Veggies].Included = false;
+            AdditionalIngredients[Ingredient.Chicken].Included = true;
+            AdditionalIngredients[Ingredient.Veggies].Included = true;
             AdditionalIngredients[Ingredient.Queso].Included = true;
-            AdditionalIngredients[Ingredient.PintoBeans].Included = true;
             AdditionalIngredients[Ingredient.Guacamole].Included = false;
             AdditionalIngredients[Ingredient.SourCream].Included = true;
 
-            _salsaDefault = Salsa.Hot;
-            SalsaType = Salsa.Hot;
+            _salsaDefault = Salsa.Medium;
+            SalsaType = Salsa.Medium;
         }
 
         /*
         /// <summary>
-        /// Property holding the selected salsa in this bowl
+        /// Property holding the selected salsa type for nachos
         /// </summary>
-        public Salsa SalsaSelection { get; set; } = Salsa.Hot;
+        public Salsa SalsaSelection { get; set; } = Salsa.Medium;
         */
 
+        
         /// <summary>
         /// price of this bowl
         /// </summary>
@@ -73,31 +72,30 @@ namespace BuildYourBowl.Data.Entrees
             }
         }
         
-        //Calories and Prep info here
-        
+        //Calories and prep info here
+        /*
         /// <summary>
-        /// the total number of calories in this bowl
+        /// the total number of calories in this 
         /// </summary>
-        public override uint Calories
+        public uint Calories
         {
             get
             {
-                uint cals = 620;
+                uint cals = 650;
 
-                if (!AdditionalIngredients[Ingredient.Steak].Included) cals -= 180;
-                if (!AdditionalIngredients[Ingredient.Queso].Included) cals -= 110;
-                if (AdditionalIngredients[Ingredient.Veggies].Included) cals += 20;
-                if (!AdditionalIngredients[Ingredient.SourCream].Included) cals -= 100;
-                if (SalsaType == Salsa.None) cals -= 20;
-                if (AdditionalIngredients[Ingredient.Guacamole].Included) cals += 150;
+                if (!Veggies) cals -= 20;
+                if (!Queso) cals -= 110;
+                if (!Chicken) cals -= 150;
+                if (!SourCream) cals -= 100;
+                if (SalsaSelection == Salsa.None) cals -= 20;
+                if (Guacamole) cals += 150;
 
                 return cals;
             }
         }
-        
-
+        */
         /// <summary>
-        /// Information for the preparation of this bowl
+        /// Information for the preparation of this
         /// </summary>
         public override IEnumerable<string> Instructions
         {
@@ -105,12 +103,12 @@ namespace BuildYourBowl.Data.Entrees
             {
                 List<string> instructions = new();
 
-                if (!AdditionalIngredients[Ingredient.Steak].Included) instructions.Add("Hold Steak");
+                if (!AdditionalIngredients[Ingredient.Veggies].Included) instructions.Add("Hold Veggies");
                 if (!AdditionalIngredients[Ingredient.Queso].Included) instructions.Add("Hold Queso");
-                if (AdditionalIngredients[Ingredient.Veggies].Included) instructions.Add("Add Veggies");
+                if (!AdditionalIngredients[Ingredient.Chicken].Included) instructions.Add("Hold Chicken");
                 if (!AdditionalIngredients[Ingredient.SourCream].Included) instructions.Add("Hold Sour Cream");
                 if (SalsaType == Salsa.None) instructions.Add("Hold Salsa");
-                else if (SalsaType != Salsa.Hot) instructions.Add($"Swap {SalsaType} Salsa");
+                else if (SalsaType != Salsa.Medium) instructions.Add($"Swap {SalsaType} Salsa");
                 if (AdditionalIngredients[Ingredient.Guacamole].Included) instructions.Add("Add Guacamole");
 
                 return instructions;

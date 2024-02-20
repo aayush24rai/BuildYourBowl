@@ -12,7 +12,7 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// The defintion if the corn dog bites meal instance
     /// </summary>
-    public class CornDogBitesMeal
+    public class CornDogBitesMeal : KidsMeal
     {
         /// <summary>
         /// The name of the corn dogs bites meal instance
@@ -20,7 +20,7 @@ namespace BuildYourBowl.Data
         /// <remarks>
         /// This is an example of an get-only autoproperty with a default value
         /// </remarks>
-        public string Name { get; } = "Corn Dog Bites Kids Meal";
+        public override string Name { get; } = "Corn Dog Bites Kids Meal";
 
         /// <summary>
         /// The description of this meal
@@ -28,8 +28,21 @@ namespace BuildYourBowl.Data
         /// <remarks>
         /// This is also a get-only autoproperty, but it was declared using lambda syntax
         /// </remarks>
-        public string Description { get; } = "Mini corn dogs with side and drink";
+        public override string Description { get; } = "Mini corn dogs with side and drink";
 
+        /// <summary>
+        /// Constructor for the chicken nuggets meal
+        /// </summary>
+        public CornDogBitesMeal()
+        {
+            _count = 5;
+            Count = 5;
+            _drinkDefault.SizeChoice = Size.Kids;
+            DrinkChoice.SizeChoice = Size.Kids;
+            SideChoice.SizeChoice = Size.Kids;
+        }
+
+        /*
         /// <summary>
         /// Private backing field for the count property
         /// </summary>
@@ -116,11 +129,12 @@ namespace BuildYourBowl.Data
                 return cals;
             }
         }
+        */
 
         /// <summary>
         /// Information for the preparation of the corn dog bites meal
         /// </summary>
-        public IEnumerable<string> PreparationInformation
+        public override IEnumerable<string> Instructions
         {
             get
             {

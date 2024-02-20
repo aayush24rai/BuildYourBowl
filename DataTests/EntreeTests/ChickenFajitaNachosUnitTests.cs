@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BuildYourBowl.DataTests.SidesUnitTests
+namespace BuildYourBowl.DataTests.EntreeTests
 {
     /// <summary>
     /// Class to check tests for the chicken fajita nachos class
@@ -18,12 +18,12 @@ namespace BuildYourBowl.DataTests.SidesUnitTests
         public void DefaultToppingsTest()
         {
             ChickenFajitaNachos nachos = new();
-            Assert.True(nachos.Veggies);
-            Assert.True(nachos.Chicken);
-            Assert.True(nachos.Queso);
-            Assert.Equal(Salsa.Medium, nachos.SalsaSelection);
-            Assert.False(nachos.Guacamole);
-            Assert.True(nachos.SourCream);
+            Assert.True(nachos.AdditionalIngredients[Ingredient.Veggies].Included);
+            Assert.True(nachos.AdditionalIngredients[Ingredient.Chicken].Included);
+            Assert.True(nachos.AdditionalIngredients[Ingredient.Queso].Included);
+            Assert.Equal(Salsa.Medium, nachos.SalsaType);
+            Assert.False(nachos.AdditionalIngredients[Ingredient.Guacamole].Included);
+            Assert.True(nachos.AdditionalIngredients[Ingredient.SourCream].Included);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace BuildYourBowl.DataTests.SidesUnitTests
         [InlineData(false, true, false, Salsa.Medium, true, true, new string[] { "Hold Veggies", "Hold Queso", "Add Guacamole" })]
         [InlineData(true, true, false, Salsa.Mild, false, false, new string[] { "Hold Queso", "Swap Mild Salsa", "Hold Sour Cream" })]
         //Specific required test case
-        [InlineData(false, false, true, Salsa.Hot, false, false, new string[] { "Hold Chicken", "Hold Veggies","Swap Hot Salsa", "Hold Sour Cream" })]
+        [InlineData(false, false, true, Salsa.Hot, false, false, new string[] { "Hold Chicken", "Hold Veggies", "Swap Hot Salsa", "Hold Sour Cream" })]
         [InlineData(false, false, true, Salsa.Green, true, true, new string[] { "Hold Veggies", "Hold Chicken", "Swap Green Salsa", "Add Guacamole" })]
         [InlineData(false, true, false, Salsa.None, true, true, new string[] { "Hold Veggies", "Hold Queso", "Hold Salsa", "Add Guacamole" })]
         [InlineData(false, false, false, Salsa.None, true, false, new string[] { "Hold Veggies", "Hold Chicken", "Hold Queso", "Hold Salsa", "Add Guacamole", "Hold Sour Cream" })]
@@ -70,19 +70,19 @@ namespace BuildYourBowl.DataTests.SidesUnitTests
         public void checkingPreparationInfoTest(bool veggies, bool chicken, bool queso, Salsa salsa, bool guacamole, bool sourcream, string[] prepInfo)
         {
             ChickenFajitaNachos nachos = new();
-            nachos.Veggies = veggies;
-            nachos.Queso = queso;
-            nachos.Chicken = chicken;
-            nachos.SalsaSelection = salsa;
-            nachos.Guacamole = guacamole;
-            nachos.SourCream = sourcream;
+            nachos.AdditionalIngredients[Ingredient.Veggies].Included = veggies;
+            nachos.AdditionalIngredients[Ingredient.Queso].Included = queso;
+            nachos.AdditionalIngredients[Ingredient.Chicken].Included = chicken;
+            nachos.SalsaType = salsa;
+            nachos.AdditionalIngredients[Ingredient.Guacamole].Included = guacamole;
+            nachos.AdditionalIngredients[Ingredient.SourCream].Included = sourcream;
 
             foreach (string instruction in prepInfo)
             {
-                Assert.Contains(instruction, nachos.PreparationInformation);
+                Assert.Contains(instruction, nachos.Instructions);
             }
 
-            Assert.Equal(prepInfo.Length, nachos.PreparationInformation.Count());
+            Assert.Equal(prepInfo.Length, nachos.Instructions.Count());
         }
 
 
@@ -107,15 +107,15 @@ namespace BuildYourBowl.DataTests.SidesUnitTests
         [InlineData(false, false, false, Salsa.None, true, true, 11.99)]
         [InlineData(true, false, false, Salsa.None, true, true, 11.99)]
 
-        public void checkingPriceTest( bool veggies, bool chicken, bool queso, Salsa salsa, bool guacamole, bool sourcream, decimal price)
+        public void checkingPriceTest(bool veggies, bool chicken, bool queso, Salsa salsa, bool guacamole, bool sourcream, decimal price)
         {
             ChickenFajitaNachos nachos = new();
-            nachos.Veggies = veggies;
-            nachos.Queso = queso;
-            nachos.Chicken = chicken;
-            nachos.SalsaSelection = salsa;
-            nachos.Guacamole = guacamole;
-            nachos.SourCream = sourcream;
+            nachos.AdditionalIngredients[Ingredient.Veggies].Included = veggies;
+            nachos.AdditionalIngredients[Ingredient.Queso].Included = queso;
+            nachos.AdditionalIngredients[Ingredient.Chicken].Included = chicken;
+            nachos.SalsaType = salsa;
+            nachos.AdditionalIngredients[Ingredient.Guacamole].Included = guacamole;
+            nachos.AdditionalIngredients[Ingredient.SourCream].Included = sourcream;
 
             Assert.Equal(price, nachos.Price);
         }
@@ -144,12 +144,12 @@ namespace BuildYourBowl.DataTests.SidesUnitTests
         public void checkingCaloriesTest(bool veggies, bool chicken, bool queso, Salsa salsa, bool guacamole, bool sourcream, uint cals)
         {
             ChickenFajitaNachos nachos = new();
-            nachos.Veggies = veggies;
-            nachos.Queso = queso;
-            nachos.Chicken = chicken;
-            nachos.SalsaSelection = salsa;
-            nachos.Guacamole = guacamole;
-            nachos.SourCream = sourcream;
+            nachos.AdditionalIngredients[Ingredient.Veggies].Included = veggies;
+            nachos.AdditionalIngredients[Ingredient.Queso].Included = queso;
+            nachos.AdditionalIngredients[Ingredient.Chicken].Included = chicken;
+            nachos.SalsaType = salsa;
+            nachos.AdditionalIngredients[Ingredient.Guacamole].Included = guacamole;
+            nachos.AdditionalIngredients[Ingredient.SourCream].Included = sourcream;
 
             Assert.Equal(cals, nachos.Calories);
         }

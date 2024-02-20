@@ -10,7 +10,7 @@ namespace BuildYourBowl.Data.Drinks
     /// <summary>
     /// The definition of the milk class
     /// </summary>
-    public class Milk
+    public class Milk : Drink
     {
         /// <summary>
         /// The name of the milk instance
@@ -18,7 +18,7 @@ namespace BuildYourBowl.Data.Drinks
         /// <remarks>
         /// This is an example of an get-only autoproperty with a default value
         /// </remarks>
-        public string Name { get; } = "Milk";
+        public override string Name { get; } = "Milk";
 
         /// <summary>
         /// The description of this 
@@ -26,22 +26,31 @@ namespace BuildYourBowl.Data.Drinks
         /// <remarks>
         /// This is also a get-only autoproperty, but it was declared using lambda syntax
         /// </remarks>
-        public string Description { get; } = "Creamy beverage in plain or chocolate";
+        public override string Description { get; } = "Creamy beverage in plain or chocolate";
 
+        public Milk() 
+        {
+            _sizeDefault = Size.Kids;
+            SizeChoice = Size.Kids;
+        }
+
+        /*
         /// <summary>
         /// Propoerty holding the selected size of fries
         /// </summary>
         public Size SizeSelection { get; } = Size.Kids;
+        */
 
         /// <summary>
         /// Whether milk is in chocolate flavor or not
         /// </summary>
         public bool Chocolate { get; set; } = false;
 
+        /*
         /// <summary>
         /// price of this bowl
         /// </summary>
-        public decimal Price
+        public override decimal Price
         {
             get
             {
@@ -49,10 +58,12 @@ namespace BuildYourBowl.Data.Drinks
                 return cost;
             }
         }
+        */
+
         /// <summary>
         /// the total number of calories in this bowl
         /// </summary>
-        public uint Calories
+        public override uint Calories
         {
             get
             {
@@ -66,7 +77,7 @@ namespace BuildYourBowl.Data.Drinks
         /// <summary>
         /// Information for the preparation of this bowl
         /// </summary>
-        public IEnumerable<string> PreparationInformation
+        public override IEnumerable<string> Instructions
         {
             get
             {

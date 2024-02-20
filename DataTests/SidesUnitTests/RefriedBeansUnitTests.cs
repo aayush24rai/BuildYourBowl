@@ -18,9 +18,9 @@ namespace BuildYourBowl.DataTests.SidesUnitTests
         public void DefaultToppingsTest()
         {
             RefriedBeans side = new();
-            Assert.True(side.Onions);
-            Assert.True(side.CheddarCheese);
-            Assert.Equal(Size.Medium, side.SizeSelection);
+            Assert.True(side.AdditionalIngredients[Ingredient.Onions].Included);
+            Assert.True(side.AdditionalIngredients[Ingredient.CheddarCheese].Included);
+            Assert.Equal(Size.Medium, side.SizeChoice);
 
         }
 
@@ -62,16 +62,16 @@ namespace BuildYourBowl.DataTests.SidesUnitTests
         public void checkingPreparationInfoTest(bool onions, bool cheese, Size size, string[] prepInfo)
         {
             RefriedBeans side = new();
-            side.Onions = onions;
-            side.CheddarCheese = cheese;
-            side.SizeSelection = size;
+            side.AdditionalIngredients[Ingredient.Onions].Included = onions;
+            side.AdditionalIngredients[Ingredient.CheddarCheese].Included = cheese;
+            side.SizeChoice = size;
 
             foreach (string instruction in prepInfo)
             {
-                Assert.Contains(instruction, side.PreparationInformation);
+                Assert.Contains(instruction, side.Instructions);
             }
 
-            Assert.Equal(prepInfo.Length, side.PreparationInformation.Count());
+            Assert.Equal(prepInfo.Length, side.Instructions.Count());
         }
 
 
@@ -93,9 +93,9 @@ namespace BuildYourBowl.DataTests.SidesUnitTests
         public void checkingPriceTest(bool onions, bool cheese, Size size, decimal price)
         {
             RefriedBeans side = new();
-            side.Onions = onions;
-            side.CheddarCheese = cheese;
-            side.SizeSelection = size;
+            side.AdditionalIngredients[Ingredient.Onions].Included = onions;
+            side.AdditionalIngredients[Ingredient.CheddarCheese].Included = cheese;
+            side.SizeChoice = size;
 
             Assert.Equal(price, side.Price);
         }
@@ -118,9 +118,9 @@ namespace BuildYourBowl.DataTests.SidesUnitTests
         public void checkingCaloriesTest(bool onions, bool cheese, Size size, uint cals)
         {
             RefriedBeans side = new();
-            side.Onions= onions;
-            side.CheddarCheese = cheese;
-            side.SizeSelection = size;
+            side.AdditionalIngredients[Ingredient.Onions].Included = onions;
+            side.AdditionalIngredients[Ingredient.CheddarCheese].Included = cheese;
+            side.SizeChoice = size;
 
             Assert.Equal(cals, side.Calories);
         }

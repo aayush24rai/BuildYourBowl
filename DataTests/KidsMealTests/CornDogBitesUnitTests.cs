@@ -19,9 +19,10 @@ namespace BuildYourBowl.DataTests.KidsMealTests
         {
             CornDogBitesMeal meal = new();
             Assert.Equal((uint)5, meal.Count);
-            Assert.False(meal.DrinkChoice.Chocolate);
-            Assert.False(meal.SideChoice.Curly);
-            Assert.Equal(Size.Kids, meal.SideChoice.SizeSelection);
+            //Assert.False(meal.DrinkChoice.Chocolate);
+            //Assert.False(meal.SideChoice.Curly);
+            Assert.Equal(Size.Kids, meal.DrinkChoice.SizeChoice);
+            Assert.Equal(Size.Kids, meal.SideChoice.SizeChoice);
 
         }
 
@@ -53,10 +54,10 @@ namespace BuildYourBowl.DataTests.KidsMealTests
 
             foreach (string instruction in prepInfo)
             {
-                Assert.Contains(instruction, meal.PreparationInformation);
+                Assert.Contains(instruction, meal.Instructions);
             }
 
-            Assert.Equal(prepInfo.Length, meal.PreparationInformation.Count());
+            Assert.Equal(prepInfo.Length, meal.Instructions.Count());
         }
 
 
@@ -67,19 +68,20 @@ namespace BuildYourBowl.DataTests.KidsMealTests
         /// <param name="side">size of the side</param>
         /// <param name="price">the price of the fries</param>
         [Theory]
-        [InlineData(5, Size.Kids, 5.99)]
-        [InlineData(6, Size.Kids, 5.99 + (0.75 * (6 - 5)))]
-        [InlineData(7, Size.Kids, 5.99 + (0.75 * (7 - 5)))]
-        [InlineData(8, Size.Kids, 5.99 + (0.75 * (8 - 5)))]
-        [InlineData(5, Size.Small, 5.99 + 0.50)]
-        [InlineData(6, Size.Medium, 5.99 + (0.75 * (6 - 5)) + 1.00)]
-        [InlineData(7, Size.Large, 5.99 + (0.75 * (7 - 5)) + 1.50)]
+        [InlineData(5, Size.Kids, Size.Kids, 5.99)]
+        [InlineData(6, Size.Kids, Size.Kids, 5.99 + (0.75 * (6 - 5)))]
+        [InlineData(7, Size.Kids, Size.Kids, 5.99 + (0.75 * (7 - 5)))]
+        [InlineData(8, Size.Kids, Size.Kids, 5.99 + (0.75 * (8 - 5)))]
+        [InlineData(5, Size.Small, Size.Kids, 5.99 + 0.50)]
+        [InlineData(6, Size.Medium, Size.Kids, 5.99 + (0.75 * (6 - 5)) + 1.00)]
+        [InlineData(7, Size.Large, Size.Kids, 5.99 + (0.75 * (7 - 5)) + 1.50)]
 
-        public void checkingPriceTest(uint count, Size side, decimal price)
+        public void checkingPriceTest(uint count, Size side, Size drink, decimal price)
         {
             CornDogBitesMeal meal = new();
             meal.Count = count;
-            meal.SideChoice.SizeSelection = side;
+            meal.SideChoice.SizeChoice = side;
+            meal.DrinkChoice.SizeChoice = drink;
 
             Assert.Equal(price, meal.Price);
         }
@@ -91,18 +93,19 @@ namespace BuildYourBowl.DataTests.KidsMealTests
         /// <param name="size">size of the side</param>
         /// <param name="cals">the price of the meal</param>
         [Theory]
-        [InlineData(5, Size.Kids, (50 * 5) + 200 + (0.60 * 350))]
-        [InlineData(6, Size.Kids, (50 * 6) + 200 + (0.60 * 350))]
-        [InlineData(7, Size.Kids, (50 * 7) + 200 + (0.60 * 350))]
-        [InlineData(8, Size.Small, (50 * 8) + 200 + (0.75 * 350))]
-        [InlineData(5, Size.Medium, (50 * 5) + 200 + 350)]
-        [InlineData(6, Size.Large, (50 * 6) + 200 + (1.50 * 350))]
+        [InlineData(5, Size.Kids, Size.Kids, (50 * 5) + 200 + (0.60 * 350))]
+        [InlineData(6, Size.Kids, Size.Kids, (50 * 6) + 200 + (0.60 * 350))]
+        [InlineData(7, Size.Kids, Size.Kids, (50 * 7) + 200 + (0.60 * 350))]
+        [InlineData(8, Size.Small, Size.Kids, (50 * 8) + 200 + (0.75 * 350))]
+        [InlineData(5, Size.Medium, Size.Kids, (50 * 5) + 200 + 350)]
+        [InlineData(6, Size.Large, Size.Kids, (50 * 6) + 200 + (1.50 * 350))]
 
-        public void checkingCaloriesTest(uint count, Size size, uint cals)
+        public void checkingCaloriesTest(uint count, Size size, Size drink, uint cals)
         {
             CornDogBitesMeal meal = new();
             meal.Count = count;
-            meal.SideChoice.SizeSelection = size;
+            meal.SideChoice.SizeChoice = size;
+            meal.DrinkChoice.SizeChoice = drink;
 
             Assert.Equal(cals, meal.Calories);
         }

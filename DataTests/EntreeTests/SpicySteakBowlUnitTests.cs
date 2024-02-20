@@ -18,12 +18,12 @@ namespace BuildYourBowl.DataTests.EntreeTests
         public void DefaultToppingsTest()
         {
             SpicySteakBowl bowl = new();
-            Assert.True(bowl.Steak);
-            Assert.False(bowl.Veggies);
-            Assert.True(bowl.Queso);
-            Assert.Equal(Salsa.Hot, bowl.SalsaSelection);
-            Assert.False(bowl.Guacamole);
-            Assert.True(bowl.SourCream);
+            Assert.True(bowl.AdditionalIngredients[Ingredient.Steak].Included);
+            Assert.False(bowl.AdditionalIngredients[Ingredient.Veggies].Included);
+            Assert.True(bowl.AdditionalIngredients[Ingredient.Queso].Included);
+            Assert.Equal(Salsa.Hot, bowl.SalsaType);
+            Assert.False(bowl.AdditionalIngredients[Ingredient.Guacamole].Included);
+            Assert.True(bowl.AdditionalIngredients[Ingredient.SourCream].Included);
         }
 
         /// <summary>
@@ -70,19 +70,19 @@ namespace BuildYourBowl.DataTests.EntreeTests
         public void checkingPreparationInfoTest(bool steak, bool veggies, bool queso, Salsa salsa, bool guacamole, bool sourcream, string[] prepInfo)
         {
             SpicySteakBowl bowl = new();
-            bowl.Steak = steak;
-            bowl.Veggies = veggies;
-            bowl.Queso = queso;
-            bowl.SalsaSelection = salsa;
-            bowl.Guacamole = guacamole;
-            bowl.SourCream = sourcream;
+            bowl.AdditionalIngredients[Ingredient.Steak].Included = steak;
+            bowl.AdditionalIngredients[Ingredient.Veggies].Included = veggies;
+            bowl.AdditionalIngredients[Ingredient.Queso].Included = queso;
+            bowl.SalsaType = salsa;
+            bowl.AdditionalIngredients[Ingredient.Guacamole].Included = guacamole;
+            bowl.AdditionalIngredients[Ingredient.SourCream].Included = sourcream;
 
             foreach (string instruction in prepInfo)
             {
-                Assert.Contains(instruction, bowl.PreparationInformation);
+                Assert.Contains(instruction, bowl.Instructions);
             }
 
-            Assert.Equal(prepInfo.Length, bowl.PreparationInformation.Count());
+            Assert.Equal(prepInfo.Length, bowl.Instructions.Count());
         }
 
 
@@ -109,12 +109,12 @@ namespace BuildYourBowl.DataTests.EntreeTests
         public void checkingPriceTest(bool steak, bool veggies, bool queso, Salsa salsa, bool guacamole, bool sourcream, decimal price)
         {
             SpicySteakBowl bowl = new();
-            bowl.Steak = steak;
-            bowl.Veggies = veggies;
-            bowl.Queso = queso;
-            bowl.SalsaSelection = salsa;
-            bowl.Guacamole = guacamole;
-            bowl.SourCream = sourcream;
+            bowl.AdditionalIngredients[Ingredient.Steak].Included = steak;
+            bowl.AdditionalIngredients[Ingredient.Veggies].Included = veggies;
+            bowl.AdditionalIngredients[Ingredient.Queso].Included = queso;
+            bowl.SalsaType = salsa;
+            bowl.AdditionalIngredients[Ingredient.Guacamole].Included = guacamole;
+            bowl.AdditionalIngredients[Ingredient.SourCream].Included = sourcream;
 
             Assert.Equal(price, bowl.Price);
         }
@@ -143,12 +143,12 @@ namespace BuildYourBowl.DataTests.EntreeTests
         public void checkingCaloriesTest(bool steak, bool veggies, bool queso, Salsa salsa, bool guacamole, bool sourcream, uint cals)
         {
             SpicySteakBowl bowl = new();
-            bowl.Steak = steak;
-            bowl.Veggies = veggies;
-            bowl.Queso = queso;
-            bowl.SalsaSelection = salsa;
-            bowl.Guacamole = guacamole;
-            bowl.SourCream = sourcream;
+            bowl.AdditionalIngredients[Ingredient.Steak].Included = steak;
+            bowl.AdditionalIngredients[Ingredient.Veggies].Included = veggies;
+            bowl.AdditionalIngredients[Ingredient.Queso].Included = queso;
+            bowl.SalsaType = salsa;
+            bowl.AdditionalIngredients[Ingredient.Guacamole].Included = guacamole;
+            bowl.AdditionalIngredients[Ingredient.SourCream].Included = sourcream;
 
             Assert.Equal(cals, bowl.Calories);
         }

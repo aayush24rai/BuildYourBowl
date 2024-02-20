@@ -19,7 +19,7 @@ namespace BuildYourBowl.DataTests.SidesUnitTests
         {
             Fries side = new();
             Assert.False(side.Curly);
-            Assert.Equal(Size.Medium, side.SizeSelection);
+            Assert.Equal(Size.Medium, side.SizeChoice);
         }
 
         /// <summary>
@@ -60,14 +60,14 @@ namespace BuildYourBowl.DataTests.SidesUnitTests
         {
             Fries side = new();
             side.Curly = curly;
-            side.SizeSelection = size;
+            side.SizeChoice = size;
 
             foreach (string instruction in prepInfo)
             {
-                Assert.Contains(instruction, side.PreparationInformation);
+                Assert.Contains(instruction, side.Instructions);
             }
 
-            Assert.Equal(prepInfo.Length, side.PreparationInformation.Count());
+            Assert.Equal(prepInfo.Length, side.Instructions.Count());
         }
 
 
@@ -89,7 +89,7 @@ namespace BuildYourBowl.DataTests.SidesUnitTests
         {
             Fries side = new();
             side.Curly = curly;
-            side.SizeSelection = size;
+            side.SizeChoice = size;
 
             Assert.Equal(price, side.Price);
         }
@@ -112,7 +112,7 @@ namespace BuildYourBowl.DataTests.SidesUnitTests
         {
             Fries side = new();
             side.Curly = curly;
-            side.SizeSelection = size;
+            side.SizeChoice = size;
 
             Assert.Equal(cals, side.Calories);
         }

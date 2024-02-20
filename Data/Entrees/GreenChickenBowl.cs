@@ -5,7 +5,7 @@ namespace BuildYourBowl.Data.Entrees
     /// <summary>
     /// The definition of the GreenChickenBowl class
     /// </summary>
-    public class GreenChickenBowl
+    public class GreenChickenBowl : Bowl
     {
         /// <summary>
         /// The name of the green chicken bowl instance
@@ -13,7 +13,7 @@ namespace BuildYourBowl.Data.Entrees
         /// <remarks>
         /// This is an example of an get-only autoproperty with a default value
         /// </remarks>
-        public string Name { get; } = "Green Chicken Bowl";
+        public override string Name { get; } = "Green Chicken Bowl";
 
         /// <summary>
         /// The description of this bowl
@@ -21,48 +21,47 @@ namespace BuildYourBowl.Data.Entrees
         /// <remarks>
         /// This is also a get-only autoproperty, but it was declared using lambda syntax
         /// </remarks>
-        public string Description => "Rice bowl with chicken and green things";
+        public override string Description => "Rice bowl with chicken and green things";
 
         /// <summary>
-        /// Whether this bowl contains chicken
+        /// Constructor for this bowl
         /// </summary>
-        public bool Chicken { get; set; } = true;
+        public GreenChickenBowl()
+        {
+            AdditionalIngredients = new Dictionary<Ingredient, IngredientItem>();
+            AdditionalIngredients.Add(Ingredient.Chicken, new IngredientItem(Ingredient.Chicken));
+            AdditionalIngredients.Add(Ingredient.BlackBeans, new IngredientItem(Ingredient.BlackBeans));
+            AdditionalIngredients.Add(Ingredient.Veggies, new IngredientItem(Ingredient.Veggies));
+            AdditionalIngredients.Add(Ingredient.Queso, new IngredientItem(Ingredient.Queso));
+            AdditionalIngredients.Add(Ingredient.Guacamole, new IngredientItem(Ingredient.Guacamole));
+            AdditionalIngredients.Add(Ingredient.SourCream, new IngredientItem(Ingredient.SourCream));
 
-        /// <summary>
-        /// Whether this bowl contains black beans 
-        /// </summary>
-        public bool BlackBeans { get; set; } = true;
+            AdditionalIngredients[Ingredient.Chicken].Included = true;
+            AdditionalIngredients[Ingredient.BlackBeans].Included = true;
+            AdditionalIngredients[Ingredient.Veggies].Included = true;
+            AdditionalIngredients[Ingredient.Queso].Included = true;
+            AdditionalIngredients[Ingredient.Guacamole].Included = true;
+            AdditionalIngredients[Ingredient.SourCream].Included = true;
 
-        /// <summary>
-        /// Whether this bowl contains fajita veggies
-        /// </summary>
-        public bool Veggies { get; set; } = true;
+            _salsaDefault = Salsa.Green;
+            SalsaType = Salsa.Green;
+        }
 
-        /// <summary>
-        /// Whether this bowl contains queso
-        /// </summary>
-        public bool Queso { get; set; } = true;
 
+        /*
         /// <summary>
         /// Property holding the type of salsa used
         /// </summary>
         public Salsa SalsaSelection { get; set; } = Salsa.Green;
-
-        /// <summary>
-        /// Whether this bowl contains guacamole
-        /// </summary>
-        public bool Guacamole { get; set; } = true;
-
-        /// <summary>
-        /// Whether this bowl contains sour cream
-        /// </summary>
-        public bool SourCream { get; set; } = true;
+        */
 
         /// <summary>
         /// The price of this bowl
         /// </summary>
-        public decimal Price => 9.99m;
+        public override decimal Price => 9.99m;
 
+        //Calories and preparation info here
+        /*
         /// <summary>
         /// The total number of calories in this bowl
         /// </summary>
@@ -85,28 +84,29 @@ namespace BuildYourBowl.Data.Entrees
                 return cals;
             }
         }
-
+        */
         /// <summary>
         /// Information for the preparation of this bowl
         /// </summary>
-        public IEnumerable<string> PreparationInformation
+        public override IEnumerable<string> Instructions
         {
             get
             {
                 List<string> instructions = new();
 
                 //YOU DO THIS: take customizations into account
-                if (!Chicken) instructions.Add("Hold Chicken");
-                if (!BlackBeans) instructions.Add("Hold Black Beans");
-                if (!Queso) instructions.Add("Hold Queso");
-                if (!Veggies) instructions.Add("Hold Veggies");
-                if (!SourCream) instructions.Add("Hold Sour Cream");
-                if (SalsaSelection == Salsa.None) instructions.Add("Hold Salsa");
-                else if (SalsaSelection != Salsa.Green) instructions.Add($"Swap {SalsaSelection} Salsa");
-                if (!Guacamole) instructions.Add("Hold Guacamole");
+                if (!AdditionalIngredients[Ingredient.Chicken].Included) instructions.Add("Hold Chicken");
+                if (!AdditionalIngredients[Ingredient.BlackBeans].Included) instructions.Add("Hold Black Beans");
+                if (!AdditionalIngredients[Ingredient.Queso].Included) instructions.Add("Hold Queso");
+                if (!AdditionalIngredients[Ingredient.Veggies].Included) instructions.Add("Hold Veggies");
+                if (!AdditionalIngredients[Ingredient.SourCream].Included) instructions.Add("Hold Sour Cream");
+                if (SalsaType == Salsa.None) instructions.Add("Hold Salsa");
+                else if (SalsaType != Salsa.Green) instructions.Add($"Swap {SalsaType} Salsa");
+                if (!AdditionalIngredients[Ingredient.Guacamole].Included) instructions.Add("Hold Guacamole");
 
                 return instructions;
             }
         }
+        
     }
 }

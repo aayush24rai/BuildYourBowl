@@ -18,9 +18,9 @@ namespace BuildYourBowl.DataTests.SidesUnitTests
         public void DefaultToppingsTest()
         {
             StreetCorn side = new();
-            Assert.True(side.CotijaCheese);
-            Assert.True(side.Cilantro);
-            Assert.Equal(Size.Medium, side.SizeSelection);
+            Assert.True(side.AdditionalIngredients[Ingredient.CotijaCheese].Included);
+            Assert.True(side.AdditionalIngredients[Ingredient.Cilantro].Included);
+            Assert.Equal(Size.Medium, side.SizeChoice);
 
         }
 
@@ -63,16 +63,16 @@ namespace BuildYourBowl.DataTests.SidesUnitTests
         public void checkingPreparationInfoTest(bool cilantro, bool cheese, Size size, string[] prepInfo)
         {
             StreetCorn side = new();
-            side.Cilantro = cilantro;
-            side.CotijaCheese = cheese;
-            side.SizeSelection = size;
+            side.AdditionalIngredients[Ingredient.Cilantro].Included = cilantro;
+            side.AdditionalIngredients[Ingredient.CotijaCheese].Included = cheese;
+            side.SizeChoice = size;
 
             foreach (string instruction in prepInfo)
             {
-                Assert.Contains(instruction, side.PreparationInformation);
+                Assert.Contains(instruction, side.Instructions);
             }
 
-            Assert.Equal(prepInfo.Length, side.PreparationInformation.Count());
+            Assert.Equal(prepInfo.Length, side.Instructions.Count());
         }
 
 
@@ -95,9 +95,9 @@ namespace BuildYourBowl.DataTests.SidesUnitTests
         public void checkingPriceTest(bool cilantro, bool cheese, Size size, decimal price)
         {
             StreetCorn side = new();
-            side.Cilantro = cilantro;
-            side.CotijaCheese = cheese;
-            side.SizeSelection = size;
+            side.AdditionalIngredients[Ingredient.Cilantro].Included = cilantro;
+            side.AdditionalIngredients[Ingredient.CotijaCheese].Included = cheese;
+            side.SizeChoice = size;
 
             Assert.Equal(price, side.Price);
         }
@@ -121,9 +121,9 @@ namespace BuildYourBowl.DataTests.SidesUnitTests
         public void checkingCaloriesTest(bool cilantro, bool cheese, Size size, uint cals)
         {
             StreetCorn side = new();
-            side.Cilantro = cilantro;
-            side.CotijaCheese = cheese;
-            side.SizeSelection = size;
+            side.AdditionalIngredients[Ingredient.Cilantro].Included = cilantro;
+            side.AdditionalIngredients[Ingredient.CotijaCheese].Included = cheese;
+            side.SizeChoice = size;
 
             Assert.Equal(cals, side.Calories);
         }
