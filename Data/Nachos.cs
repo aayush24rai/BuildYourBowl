@@ -26,5 +26,14 @@ namespace BuildYourBowl.Data
         /// The base ingredient used in nachos
         /// </summary>
         public override IngredientItem BaseIngredient => new IngredientItem(Ingredient.Chips);
+
+        /// <summary>
+        /// Method to override the default ToString method
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

@@ -19,8 +19,8 @@ namespace BuildYourBowl.DataTests.KidsMealTests
         {
             ChickenNuggetsMeal meal = new();
             Assert.Equal((uint)5, meal.Count);
-            //Assert.False(meal.DrinkChoice.Chocolate);
-            //Assert.False(meal.SideChoice.Curly);
+            Assert.False((meal.DrinkChoice as Milk).Chocolate);
+            Assert.False((meal.SideChoice as Fries).Curly);
             Assert.Equal(Size.Kids, meal.DrinkChoice.SizeChoice);
             Assert.Equal(Size.Kids, meal.SideChoice.SizeChoice);
 
@@ -115,6 +115,16 @@ namespace BuildYourBowl.DataTests.KidsMealTests
             meal.DrinkChoice.SizeChoice = drink;
 
             Assert.Equal(cals, meal.Calories);
+        }
+
+        /// <summary>
+        /// Checking if the override ToString method is working properly
+        /// </summary>
+        [Fact]
+        public void TestToString()
+        {
+            ChickenNuggetsMeal meal = new();
+            Assert.Equal("Chicken Nuggets Kids Meal", meal.ToString());
         }
     }
 }

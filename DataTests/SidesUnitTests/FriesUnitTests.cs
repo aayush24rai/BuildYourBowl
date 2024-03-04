@@ -116,5 +116,15 @@ namespace BuildYourBowl.DataTests.SidesUnitTests
 
             Assert.Equal(cals, side.Calories);
         }
+
+        /// <summary>
+        /// Checking if the override ToString method is working properly
+        /// </summary>
+        [Fact]
+        public void TestToString()
+        {
+            Fries side = new();
+            Assert.Equal("Fries", side.ToString());
+        }
     }
 }

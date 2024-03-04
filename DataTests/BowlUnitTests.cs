@@ -91,5 +91,15 @@ namespace BuildYourBowl.DataTests
             bowl.SalsaType = Salsa.Mild;
             Assert.Equal(Salsa.Mild, bowl.SalsaType);
         }
+
+        /// <summary>
+        /// Checking if the override ToString method is working properly
+        /// </summary>
+        [Fact]
+        public void TestToString()
+        {
+            Bowl bowl = new();
+            Assert.Equal("Build-Your-Own Bowl", bowl.ToString());
+        }
     }
 }

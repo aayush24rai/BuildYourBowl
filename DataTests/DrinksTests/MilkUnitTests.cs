@@ -93,5 +93,15 @@ namespace BuildYourBowl.DataTests.DrinksTests
 
             Assert.Equal(cals, drink.Calories);
         }
+        
+        /// <summary>
+        /// Checking if the override ToString method is working properly
+        /// </summary>
+        [Fact]
+        public void TestToString()
+        {
+            Milk milk = new();
+            Assert.Equal("Milk", milk.ToString());
+        }
     }
 }

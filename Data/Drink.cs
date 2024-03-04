@@ -52,5 +52,14 @@ namespace BuildYourBowl.Data
         /// Abstract property that tracks the preparation instructions of the side menu items
         /// </summary>
         public abstract IEnumerable<string> Instructions { get; }
+
+        /// <summary>
+        /// Method to override the default ToString method
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

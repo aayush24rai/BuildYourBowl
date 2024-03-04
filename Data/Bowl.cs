@@ -26,5 +26,14 @@ namespace BuildYourBowl.Data
         /// The base ingredient used in this bowl
         /// </summary>
         public override IngredientItem BaseIngredient => new IngredientItem(Ingredient.Rice);
+
+        /// <summary>
+        /// Method to override the default ToString method
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

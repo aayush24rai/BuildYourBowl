@@ -18,7 +18,7 @@ namespace BuildYourBowl.Data.Entrees
         /// <remarks>
         /// This is an example of an get-only autoproperty with a default value
         /// </remarks>
-        public override string Name { get; } = "Spicy steak Bowl";
+        public override string Name { get; } = "Spicy steak bowl";
 
         /// <summary>
         /// The description of this bowl

@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="BuildYourBowl.PointOfSale.MenuItemSelectionControl"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BuildYourBowl.PointOfSale"
+        mc:Ignorable="d"
+        d:DesignHeight="500" d:DesignWidth="900">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Build Your Bowl" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="10"/>
+
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <!-- Entrees -->
+                <TextBlock Text="Bowls" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="10"/>
+                <Button Name = "CustomBowl" Margin="5" Click="MenuItem_Click">Custom Bowl</Button>
+                <Button Name="CarnitasBowl" Margin="5" Click="MenuItem_Click">Carnitas Bowl</Button>
+                <Button Name="GreenChickenBowl" Margin="5" Click="MenuItem_Click">Green Chicken Bowl</Button>
+                <Button Name="SpicySteakBowl" Margin="5" Click="MenuItem_Click">Spicy Steak Bowl</Button>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1">
+                <!-- Nachos -->
+                <TextBlock Text="Nachos" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="10"/>
+                <Button Name="CustomNachos" Margin="5" Click="MenuItem_Click">Custom Nachos</Button>
+                <Button Name="ClassicNachos" Margin="5" Click="MenuItem_Click">Classic Nachos</Button>
+                <Button Name="ChickenFajitaNachos" Margin="5" Click="MenuItem_Click">Chicken Fajita Nachos</Button>
+            </StackPanel>
+
+            <StackPanel Grid.Column="2">
+                <!-- Sides -->
+                <TextBlock Text="Sides" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="10"/>
+                <Button Name="Fries" Margin="5" Click="MenuItem_Click">Fries</Button>
+                <Button Name="RefriedBeans" Margin="5" Click="MenuItem_Click">Refried Beans</Button>
+                <Button Name="StreetCorn" Margin="5" Click="MenuItem_Click">Street Corn</Button>
+            </StackPanel>
+
+            <StackPanel Grid.Column="3">
+                <!-- Drinks -->
+                <TextBlock Text="Drinks" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="10"/>
+                <Button Name="Horchata" Margin="5" Click="MenuItem_Click">Horchata</Button>
+                <Button Name="Milk" Margin="5" Click="MenuItem_Click">Milk</Button>
+                <Button Name="AguaFresca" Margin="5" Click="MenuItem_Click">Agua Fresca</Button>
+            </StackPanel>
+
+            <StackPanel Grid.Column="4">
+                <!-- Drinks -->
+                <TextBlock Text="Kids Meal" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="10"/>
+                <Button Name="ChickenNuggetsMeal" Margin="5" Click="MenuItem_Click">Chicken Nuggest Meal</Button>
+                <Button Name="CornDogBitesMeal" Margin="5" Click="MenuItem_Click">Corn Dog Bites Meal</Button>
+                <Button Name="SlidersMeal" Margin="5" Click="MenuItem_Click">Sliders Meal</Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

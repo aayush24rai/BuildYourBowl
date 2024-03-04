@@ -153,5 +153,15 @@ namespace BuildYourBowl.DataTests.EntreeTests
 
             Assert.Equal(cals, nachos.Calories);
         }
+
+        /// <summary>
+        /// Checking if the override ToString method is working properly
+        /// </summary>
+        [Fact]
+        public void TestToString()
+        {
+            ChickenFajitaNachos nachos = new();
+            Assert.Equal("Chicken fajita nachos", nachos.ToString());
+        }
     }
 }

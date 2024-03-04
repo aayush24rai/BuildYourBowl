@@ -98,5 +98,14 @@ namespace BuildYourBowl.Data
                 return instructions;
             }
         }
+
+        /// <summary>
+        /// Method to override the default ToString method
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

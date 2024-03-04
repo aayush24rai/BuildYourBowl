@@ -85,5 +85,15 @@ namespace BuildYourBowl.DataTests
              nacho.SalsaType = Salsa.Mild;
             Assert.Equal(Salsa.Mild, nacho.SalsaType);
         }
+
+        /// <summary>
+        /// Checking if the override ToString method is working properly
+        /// </summary>
+        [Fact]
+        public void TestToString()
+        {
+            Nachos nachos = new();
+            Assert.Equal("Build-Your-Own Nachos", nachos.ToString());
+        }
     }
 }
