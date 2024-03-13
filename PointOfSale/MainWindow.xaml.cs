@@ -26,7 +26,12 @@ namespace BuildYourBowl.PointOfSale
         {
             InitializeComponent();
 
-            DataContext = new ObservableCollection<IMenuItem>();
+            DataContext = new Order();
+        }
+
+        public void CancelOrderClick (object sender, RoutedEventArgs e)
+        {
+            DataContext = new Order();
         }
     }
 }

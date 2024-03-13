@@ -16,7 +16,7 @@
         <local:OrderSummaryControl Grid.Column="1" />
 
         <StackPanel Grid.Column="0" VerticalAlignment="Bottom" Orientation="Horizontal">
-            <Button Name="CancelOrder" Margin="5">Cancel Order</Button>
+            <Button Name="CancelOrder" Margin="5" Click="CancelOrderClick">Cancel Order</Button>
             <Button Name="BacktoMenu" Margin="5">Back To Menu</Button>
             <Button Name="CompleteOrder" Margin="5">Complete Order</Button>
         </StackPanel>

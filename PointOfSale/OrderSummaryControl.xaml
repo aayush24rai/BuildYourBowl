@@ -3,18 +3,48 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BuildYourBowl.PointOfSale"
+        xmlns:local="clr-namespace:BuildYourBowl.PointOfSale" 
+        xmlns:data="clr-namespace:BuildYourBowl.Data;assembly=BuildYourBowl.Data" 
+        d:DataContext="{d:DesignInstance Type=data:Order}"
         mc:Ignorable="d"
         d:DesignHeight="720" Width="200">
     
         <DockPanel Grid.Row="0" Margin="10">
-            <TextBlock DockPanel.Dock ="Top" Text="Order number: 1" FontSize="16"/>
-            <TextBlock DockPanel.Dock ="Top" Text="Date: 3/1/2024" FontSize="16"/>
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                <TextBlock Text="Order number: " FontSize="16"/>
+                <TextBlock Text="{Binding Path=Number}" FontSize="16"/>
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                <TextBlock Text="Date: " FontSize="16"/>
+                <TextBlock Text="{Binding Path=PlacedAt}" FontSize="16"/>
+            </StackPanel>
 
-            <TextBlock DockPanel.Dock ="Bottom" Text="Subtotal: XX" FontSize="16"/>
-            <TextBlock DockPanel.Dock ="Bottom" Text="Tax: XX" FontSize="16"/>
-            <TextBlock DockPanel.Dock ="Bottom" Text="Total: XX" FontSize="16"/>
-            <ListView ItemsSource="{Binding}"/>
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
+                <TextBlock Text="Total: $" FontSize="16"/>
+                <TextBlock Text="{Binding Path=Total}" FontSize="16"/>
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
+                <TextBlock Text="Tax: $" FontSize="16"/>
+                <TextBlock Text="{Binding Path=Tax}" FontSize="16"/>
+            </StackPanel>   
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
+                <TextBlock Text="Subtotal: $" FontSize="16"/>
+                <TextBlock Text="{Binding Path=Subtotal}" FontSize="16"/>
+            </StackPanel>
+            
+            <ListView ItemsSource="{Binding}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel>
+                            <TextBlock DockPanel.Dock="Left" Text="{Binding Path=Name}"/>
+                            <StackPanel DockPanel.Dock="Right">
+                                <TextBlock Text="{Binding Path=Price}"/>
+                                <Button DockPanel.Dock="Right" Name="Remove" Click="RemoveClick">Remove</Button>
+                            </StackPanel>
+                    </DockPanel>
+                    </DataTemplate> 
+            </ListView.ItemTemplate>
+            </ListView>
 
-        </DockPanel>
+    </DockPanel>
 </UserControl>

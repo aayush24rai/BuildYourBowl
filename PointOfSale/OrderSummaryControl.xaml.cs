@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BuildYourBowl.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,18 @@ namespace BuildYourBowl.PointOfSale
         public OrderSummaryControl()
         {
             InitializeComponent();
+        }
+
+        public void RemoveClick(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is Order order && sender is Button button)
+            {
+                if (button.DataContext is IMenuItem menuItem)
+                {
+                    order.Remove(menuItem);
+                }
+            }
+            
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +12,7 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// representing an order containing multiple customizable menu items
     /// </summary>
-    public class Order : ICollection<IMenuItem>
+    public class Order : ICollection<IMenuItem>, INotifyPropertyChanged, INotifyCollectionChanged
     {
         /*
         /// <summary>
@@ -75,9 +77,64 @@ namespace BuildYourBowl.Data
         */
 
         //===================
-        
-        
+
+        private static int _lastOrderNumber = 1;
+
+        private DateTime _placedAt;
+
         private readonly List<IMenuItem> items = new List<IMenuItem>();
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public event NotifyCollectionChangedEventHandler? CollectionChanged;
+
+        public Order()
+        {
+            Number = _lastOrderNumber++;
+            PlacedAt = DateTime.Now;
+        }
+
+        public static void ResetLastOrderNumber()
+        {
+            _lastOrderNumber = 1;
+        }
+
+        public int Number { get; } = 0;
+
+        public DateTime PlacedAt
+        {
+            get => _placedAt;
+            init => _placedAt = value;
+        }
+
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void HandleItemPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(TaxRate) || e.PropertyName == nameof(Subtotal))
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tax)));
+            }
+            else if (e.PropertyName == nameof(Total))
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Total)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Subtotal)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tax)));
+            }
+            else if (e.PropertyName == nameof(Tax))
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tax)));
+            }
+            else
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Subtotal)));
+            }
+        }
+
 
         /// <summary>
         /// Gets the subtotal of the order.
@@ -97,14 +154,31 @@ namespace BuildYourBowl.Data
         }
 
         /// <summary>
+        /// Private backing field for tax Rate property
+        /// </summary>
+        private decimal _taxRate = 0.0915m;
+
+        /// <summary>
         /// Gets or sets the sales tax rate for the order.
         /// </summary>
-        public decimal TaxRate { get; set; } = 0.0915m;
+        public decimal TaxRate
+        {
+            get => _taxRate;
+            set
+            {
+                if (_taxRate != value)
+                {
+                    _taxRate = value;
+                    OnPropertyChanged(nameof(TaxRate));
+                    OnPropertyChanged(nameof(Tax));
+                }
+            }
+        }
 
         /// <summary>
         /// Gets the tax for the order.
         /// </summary>
-        public decimal Tax => Subtotal * TaxRate;
+        public decimal Tax => Math.Round(Subtotal * TaxRate, 2);
 
         /// <summary>
         /// Gets the total amount for the order (subtotal + tax).
@@ -121,6 +195,20 @@ namespace BuildYourBowl.Data
         public void Add(IMenuItem item)
         {
             items.Add(item);
+
+            if (item is INotifyPropertyChanged notifyPropertyChangedItem)
+            {
+                notifyPropertyChangedItem.PropertyChanged += HandleItemPropertyChanged;
+            }
+
+            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item));
+
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(items)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Count)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Total)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxRate)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tax)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Subtotal)));
         }
 
         /// <summary>
@@ -129,6 +217,13 @@ namespace BuildYourBowl.Data
         public void Clear()
         {
             items.Clear();
+            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(items)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Count)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Total)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxRate)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tax)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Subtotal)));
         }
 
         /// <summary>
@@ -152,7 +247,27 @@ namespace BuildYourBowl.Data
         /// </summary>
         public bool Remove(IMenuItem item)
         {
-            return items.Remove(item);
+            int index = items.IndexOf(item);
+            if (index > -1)
+            {
+                items.Remove(item);
+
+                if (item is INotifyPropertyChanged notifyPropertyChangedItem)
+                {
+                    notifyPropertyChangedItem.PropertyChanged += HandleItemPropertyChanged;
+                }
+
+                CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item, index));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(items)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Count)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Total)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxRate)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tax)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Subtotal)));
+                return true;
+
+            }
+            return false;
         }
 
         /// <summary>

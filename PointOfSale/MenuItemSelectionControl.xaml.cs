@@ -32,7 +32,7 @@ namespace BuildYourBowl.PointOfSale
         // Event handler for menu item buttons
         public void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            if (DataContext is ICollection<IMenuItem> list && sender is Button button)
+            if (DataContext is Order list && sender is Button button)
             {
                 if (button.Name == "CustomBowl") list.Add(new Bowl());
                 else if (button.Name == "CarnitasBowl") list.Add(new CarnitasBowl());
