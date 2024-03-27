@@ -37,10 +37,21 @@ namespace BuildYourBowl.Data.Drinks
             SizeChoice = Size.Medium;
         }
 
+        private Flavor _flavor = Flavor.Limonada;
         /// <summary>
         /// Propoerty holding the current selection for the flavor of the agua fresca
         /// </summary>
-        public Flavor DrinkFlavor { get; set; } = Flavor.Limonada;
+        public Flavor DrinkFlavor
+        {
+            get => _flavor;
+            set
+            {
+                _flavor = value;
+                OnPropertyChanged(nameof(Price));
+                OnPropertyChanged(nameof(Calories));
+                OnPropertyChanged(nameof(Instructions));
+            }
+        }
 
         /*
         /// <summary>
@@ -49,10 +60,21 @@ namespace BuildYourBowl.Data.Drinks
         public Size DrinkSize { get; set; } = Size.Medium;
         */
 
+        private bool _ice = true;
+
         /// <summary>
         /// Whether the agua fresca contains ice or not
         /// </summary>
-        public bool Ice { get; set; } = true;
+        public bool Ice
+        {
+            get => _ice;
+            set
+            {
+                _ice = value;
+                OnPropertyChanged(nameof(Calories));
+                OnPropertyChanged(nameof(Instructions));
+            }
+        }
 
         /// <summary>
         /// the price of the agua fresca drink

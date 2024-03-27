@@ -1,6 +1,7 @@
 ﻿using BuildYourBowl.Data.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,13 @@ namespace BuildYourBowl.Data
     /// </summary>
     public abstract class Drink : IMenuItem
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         /// <summary>
         /// Abstract property that tracks the name of the drink
         /// </summary>
@@ -27,7 +35,19 @@ namespace BuildYourBowl.Data
         /// </summary>
         protected Size _sizeDefault = Size.Kids;
 
-        public Size SizeChoice { get; set; } = Size.Kids;
+        private Size _sizeChoice = Size.Kids;
+
+        public Size SizeChoice
+        {
+            get => _sizeChoice;
+            set
+            {
+                _sizeChoice = value;
+                OnPropertyChanged(nameof(Price));
+                OnPropertyChanged(nameof(Calories));
+                OnPropertyChanged(nameof(Instructions));
+            }
+        }
 
         /// <summary>
         /// Private backing field of the Price property

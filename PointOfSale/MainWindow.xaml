@@ -5,20 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BuildYourBowl.PointOfSale"
         mc:Ignorable="d"
-        Title="Build Your Bowl" Height="720" Width="1080">
+         Height="520" Width="1150" Background="Cornsilk">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="4*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="3.5*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <local:MenuItemSelectionControl Grid.Column="0" />
-        <local:OrderSummaryControl Grid.Column="1" />
+        <Grid Grid.Column="0" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="8*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="0" VerticalAlignment="Bottom" Orientation="Horizontal">
-            <Button Name="CancelOrder" Margin="5" Click="CancelOrderClick">Cancel Order</Button>
-            <Button Name="BacktoMenu" Margin="5">Back To Menu</Button>
-            <Button Name="CompleteOrder" Margin="5">Complete Order</Button>
-        </StackPanel>
+            <local:MenuItemSelectionControl x:Name="MenuItemDisplay" Grid.Row="0" Visibility="Visible"/>
+            <local:EntreeControl x:Name="EntreeControlDisplay" Grid.Row="0" Visibility="Hidden"/>
+            <local:FriesControl x:Name="FriesControlDisplay" Grid.Row="0" Visibility="Hidden"/>
+            <local:StreetCornControl x:Name="StreetCornControlDisplay" Grid.Row="0" Visibility="Hidden"/>
+            <local:RefriedBeansControl x:Name="RefriedBeansControlDisplay" Grid.Row="0" Visibility="Hidden"/>
+            <local:HorchataControl x:Name="HorchataControlDisplay" Grid.Row="0" Visibility="Hidden"/>
+            <local:MilkControl x:Name="MilkControlDisplay" Grid.Row="0" Visibility="Hidden"/>
+            <local:AguaFrescaControl x:Name="AguaFrescaControlDisplay" Grid.Row="0" Visibility="Hidden"/>
+            <local:KidsMealControl x:Name="KidsMealControlDisplay" Grid.Row="0" Visibility="Hidden"/>
+
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <Button Grid.Column="0" Name="CancelOrder" Margin="5" Click="CancelOrderClick">Cancel Order</Button>
+                <Button Grid.Column="1" Name="BacktoMenu" Margin="5" Click="BackToMenuClick">Back To Menu</Button>
+                <Button Grid.Column="2" DockPanel.Dock="Right" Name="CompleteOrder" Margin="5">Complete Order</Button>
+            </Grid>
+        </Grid>
+
+        <local:OrderSummaryControl x:Name="OrderSummaryDisplay" Grid.Column="1" Margin="5" />
+
     </Grid>
 </Window>

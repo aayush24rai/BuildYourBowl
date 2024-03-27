@@ -18,6 +18,12 @@ namespace BuildYourBowl.DataTests
         /// </summary>
         internal class MockMenuItem : IMenuItem
         {
+            public event PropertyChangedEventHandler? PropertyChanged;
+
+            protected void OnPropertyChanged(string propertyName)
+            {
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
             public string Name { get; set; }
             public string Description { get; set; }
             public decimal Price { get; set; }

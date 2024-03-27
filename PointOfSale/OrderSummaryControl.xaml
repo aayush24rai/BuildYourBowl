@@ -7,44 +7,58 @@
         xmlns:data="clr-namespace:BuildYourBowl.Data;assembly=BuildYourBowl.Data" 
         d:DataContext="{d:DesignInstance Type=data:Order}"
         mc:Ignorable="d"
-        d:DesignHeight="720" Width="200">
+        d:DesignHeight="720" Width="240">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontFamily" Value="Trebuchet MS"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+    </UserControl.Resources>
     
-        <DockPanel Grid.Row="0" Margin="10">
-            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-                <TextBlock Text="Order number: " FontSize="16"/>
-                <TextBlock Text="{Binding Path=Number}" FontSize="16"/>
-            </StackPanel>
-            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-                <TextBlock Text="Date: " FontSize="16"/>
-                <TextBlock Text="{Binding Path=PlacedAt}" FontSize="16"/>
-            </StackPanel>
+    <DockPanel Grid.Row="0" Margin="10">
+        <TextBlock DockPanel.Dock="Top" Text="{Binding Path=Number, StringFormat='{}Order number: {0}'}"/>
+        <TextBlock DockPanel.Dock="Top" Text="{Binding Path=PlacedAt, StringFormat='{}Date: {0:MM/dd/yyyy}'}"/>
 
-            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
-                <TextBlock Text="Total: $" FontSize="16"/>
-                <TextBlock Text="{Binding Path=Total}" FontSize="16"/>
-            </StackPanel>
-            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
-                <TextBlock Text="Tax: $" FontSize="16"/>
-                <TextBlock Text="{Binding Path=Tax}" FontSize="16"/>
-            </StackPanel>   
-            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
-                <TextBlock Text="Subtotal: $" FontSize="16"/>
-                <TextBlock Text="{Binding Path=Subtotal}" FontSize="16"/>
-            </StackPanel>
-            
-            <ListView ItemsSource="{Binding}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <DockPanel>
-                            <TextBlock DockPanel.Dock="Left" Text="{Binding Path=Name}"/>
-                            <StackPanel DockPanel.Dock="Right">
-                                <TextBlock Text="{Binding Path=Price}"/>
-                                <Button DockPanel.Dock="Right" Name="Remove" Click="RemoveClick">Remove</Button>
-                            </StackPanel>
-                    </DockPanel>
-                    </DataTemplate> 
+        <TextBlock DockPanel.Dock="Bottom" Text="{Binding Path=Total, StringFormat='{}{0:Total: $0.00}'}" FontSize="16"/>
+        <TextBlock DockPanel.Dock="Bottom" Text="{Binding Path=Tax, StringFormat='{}{0:Tax: $0.00}'}"/>
+        <TextBlock DockPanel.Dock="Bottom" Text="{Binding Path=Subtotal, StringFormat='{}{0:Subtotal: $0.00}'}" FontSize="16"/>
+
+        <ListView ItemsSource="{Binding}" HorizontalContentAlignment="Stretch">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="{Binding Path=Name}"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Path=Price}"/>
+                        </Grid>
+
+                        <ListBox Grid.Row="1" ItemsSource="{Binding Path=Instructions}"/>
+
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Column="0" Name="Edit" Click="EditClick" Background="Green" Foreground="White" Width="80">Edit</Button>
+                            <Button Grid.Column="1" Name="Remove" Click="RemoveClick" Background="Red" Foreground="White" Width="80">Remove</Button>
+                        </Grid>                    
+                    </Grid>
+                </DataTemplate> 
             </ListView.ItemTemplate>
-            </ListView>
+        </ListView>
 
     </DockPanel>
 </UserControl>

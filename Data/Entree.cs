@@ -1,6 +1,7 @@
 ﻿using BuildYourBowl.Data.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,13 @@ namespace BuildYourBowl.Data
     /// </summary>
     public abstract class Entree : IMenuItem
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         /// <summary>
         /// Abstract property that tracks the name of the entree menu item
         /// </summary>
@@ -87,10 +95,22 @@ namespace BuildYourBowl.Data
         /// </summary>
         protected Salsa _salsaDefault = Salsa.Medium;
 
+        private Salsa _salsa = Salsa.Medium;
+
         /// <summary>
         /// Abstract property that tracks the type of salsa in the entree menu item
         /// </summary>
-        public Salsa SalsaType { get; set; } = Salsa.Medium;
+        public Salsa SalsaType
+        {
+            get => _salsa;
+            set
+            {
+                _salsa = value;
+                OnPropertyChanged(nameof(Price));
+                OnPropertyChanged(nameof(Calories));
+                OnPropertyChanged(nameof(Instructions));
+            }
+        }
 
         /// <summary>
         /// Abstract property that tracks the base ingredient of the entree menu item

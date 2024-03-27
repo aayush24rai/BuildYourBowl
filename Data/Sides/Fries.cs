@@ -36,7 +36,7 @@ namespace BuildYourBowl.Data.Sides
             _sizeDefault = Size.Medium;
             SizeChoice = Size.Medium;
 
-            Calories = 350;
+            ///Calories = 350;
         }
 
         //Old size here
@@ -47,10 +47,20 @@ namespace BuildYourBowl.Data.Sides
         public Size SizeSelection { get; set; } = Size.Medium;
         */
 
+        private bool _curly = false;
+
         /// <summary>
         /// Whether fries are curly or not
         /// </summary>
-        public bool Curly { get; set; } = false;
+        public bool Curly
+        {
+            get => _curly;
+            set
+            {
+                _curly = value;
+                OnPropertyChanged(nameof(Instructions));
+            }
+        }        
 
         //Old Price and Cals here
         /*
@@ -70,25 +80,25 @@ namespace BuildYourBowl.Data.Sides
                 return cost;
             }
         }
-        
+        */
 
         /// <summary>
         /// the total number of calories in this bowl
         /// </summary>
-        public uint Calories
+        public override uint Calories
         {
             get
             {
                 uint cals = 350;
 
-                if (SizeSelection == Size.Kids) cals = (uint)(0.60 * cals);
-                if (SizeSelection == Size.Small) cals = (uint)(0.75 * cals);
-                if (SizeSelection == Size.Large) cals = (uint)(1.50 * cals);
+                if (SizeChoice == Size.Kids) cals = (uint)(0.60 * cals);
+                if (SizeChoice == Size.Small) cals = (uint)(0.75 * cals);
+                if (SizeChoice == Size.Large) cals = (uint)(1.50 * cals);
 
                 return cals;
             }
         }
-        */
+        
 
         /// <summary>
         /// Information for the preparation of this bowl

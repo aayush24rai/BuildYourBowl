@@ -115,24 +115,9 @@ namespace BuildYourBowl.Data
 
         private void HandleItemPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(TaxRate) || e.PropertyName == nameof(Subtotal))
-            {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tax)));
-            }
-            else if (e.PropertyName == nameof(Total))
-            {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Total)));
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Subtotal)));
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tax)));
-            }
-            else if (e.PropertyName == nameof(Tax))
-            {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tax)));
-            }
-            else
-            {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Subtotal)));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Total)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Subtotal)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tax)));
         }
 
 

@@ -20,6 +20,8 @@ namespace BuildYourBowl.PointOfSale
     /// </summary>
     public partial class OrderSummaryControl : UserControl
     {
+        public event EventHandler<CustomizeItemArgs>? EditItemEvent;
+
         public OrderSummaryControl()
         {
             InitializeComponent();
@@ -32,9 +34,21 @@ namespace BuildYourBowl.PointOfSale
                 if (button.DataContext is IMenuItem menuItem)
                 {
                     order.Remove(menuItem);
+                    EditItemEvent?.Invoke(this, new CustomizeItemArgs(menuItem));
                 }
             }
-            
         }
+
+        public void EditClick(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && DataContext is Order order)
+            {
+                if (button.DataContext is IMenuItem menuItem)
+                {
+                    EditItemEvent?.Invoke(this, new CustomizeItemArgs(menuItem));
+                }
+            }
+        }
+
     }
 }

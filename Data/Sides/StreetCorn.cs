@@ -43,10 +43,10 @@ namespace BuildYourBowl.Data.Sides
             _sizeDefault = Size.Medium;
             SizeChoice = Size.Medium;
 
-            Price = 4.50m;
+            ///Price = 4.50m;
 
-            if (!AdditionalIngredients[Ingredient.CotijaCheese].Included) Calories -= 80;
-            if (!AdditionalIngredients[Ingredient.Cilantro].Included) Calories -= 5;
+            ///if (!AdditionalIngredients[Ingredient.CotijaCheese].Included) Calories -= 80;
+            ///if (!AdditionalIngredients[Ingredient.Cilantro].Included) Calories -= 5;
         }
 
         //Old size price cals and prep info
