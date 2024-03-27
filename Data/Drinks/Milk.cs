@@ -41,10 +41,20 @@ namespace BuildYourBowl.Data.Drinks
         public Size SizeSelection { get; } = Size.Kids;
         */
 
+        private bool _chocolate = false;
         /// <summary>
         /// Whether milk is in chocolate flavor or not
         /// </summary>
-        public bool Chocolate { get; set; } = false;
+        public bool Chocolate
+        {
+            get => _chocolate;
+            set
+            {
+                _chocolate = value;
+                OnPropertyChanged(nameof(Calories));
+                OnPropertyChanged(nameof(Instructions));
+            }
+        }
 
         /*
         /// <summary>

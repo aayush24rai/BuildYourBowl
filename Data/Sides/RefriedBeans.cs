@@ -43,13 +43,29 @@ namespace BuildYourBowl.Data.Sides
             _sizeDefault = Size.Medium;
             SizeChoice = Size.Medium;
 
-            Price = 3.75m;
+            ///Price = 3.75m;
 
 
-            if (!AdditionalIngredients[Ingredient.Onions].Included) _calories -= 5;
-            if (!AdditionalIngredients[Ingredient.CheddarCheese].Included) _calories -= 90;
+            ///if (!AdditionalIngredients[Ingredient.Onions].Included) _calories -= 5;
+            ///if (!AdditionalIngredients[Ingredient.CheddarCheese].Included) _calories -= 90;
         }
 
+        /// <summary>
+        /// price of this bowl
+        /// </summary>
+        public override decimal Price
+        {
+            get
+            {
+                decimal cost = 3.75m;
+
+                if (SizeChoice == Size.Kids) cost -= 1.00m;
+                if (SizeChoice == Size.Small) cost -= 0.50m;
+                if (SizeChoice == Size.Large) cost += 0.75m;
+
+                return cost;
+            }
+        }
 
         //Old size selection price cals and prep info
         /*
@@ -59,22 +75,7 @@ namespace BuildYourBowl.Data.Sides
         /// </summary>
         public Size SizeSelection { get; set; } = Size.Medium;
         
-        /// <summary>
-        /// price of this bowl
-        /// </summary>
-        public decimal Price
-        {
-            get
-            {
-                decimal cost = 3.75m;
-
-                if (SizeSelection == Size.Kids) cost -= 1.00m;
-                if (SizeSelection == Size.Small) cost -= 0.50m;
-                if (SizeSelection == Size.Large) cost += 0.75m;
-
-                return cost;
-            }
-        }
+        
         */
         /// <summary>
         /// the total number of calories in this

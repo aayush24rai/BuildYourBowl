@@ -44,10 +44,21 @@ namespace BuildYourBowl.Data.Drinks
         public Size SizeSelection { get; set; } = Size.Medium;
         */
 
+        private bool _ice = true;
+
         /// <summary>
         /// Whether there is ice or not
         /// </summary>
-        public bool Ice { get; set; } = true;
+        public bool Ice
+        {
+            get => _ice;
+            set
+            {
+                _ice = value;
+                OnPropertyChanged(nameof(Calories));
+                OnPropertyChanged(nameof(Instructions));
+            }
+        }
 
         /// <summary>
         /// price of this drink

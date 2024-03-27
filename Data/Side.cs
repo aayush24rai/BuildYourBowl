@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,13 @@ namespace BuildYourBowl.Data
     /// </summary>
     public abstract class Side : IMenuItem
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         /// <summary>
         /// Abstract property that tracks the name of the side
         /// </summary>
@@ -27,12 +35,26 @@ namespace BuildYourBowl.Data
         /// </summary>
         protected Size _sizeDefault = Size.Kids;
 
-        public Size SizeChoice { get; set; } = Size.Kids;
+        ///public Size SizeChoice { get; set; } = Size.Kids;
+
+        private Size _sizeChoice = Size.Kids;
+
+        public Size SizeChoice
+        {
+            get => _sizeChoice;
+            set
+            {
+                _sizeChoice = value;
+                OnPropertyChanged(nameof(Price));
+                OnPropertyChanged(nameof(Calories));
+                OnPropertyChanged(nameof(Instructions));
+            }
+        }
 
         /// <summary>
         /// Private backing field of the Price property
         /// </summary>
-        private decimal _price = 3.50m;
+        ///private decimal _price = 3.50m;
 
         /// <summary>
         /// Virtual Property that traccjs the price of the side menu item
@@ -41,14 +63,14 @@ namespace BuildYourBowl.Data
         {
             get
             {
-                if (SizeChoice == Size.Kids) _price -= 1.00m;
-                if (SizeChoice == Size.Small) _price -= 0.50m;
-                if (SizeChoice == Size.Large) _price += 0.75m;
+                decimal price = 3.50m;
+                if (SizeChoice == Size.Kids) price -= 1.00m;
+                if (SizeChoice == Size.Small) price -= 0.50m;
+                if (SizeChoice == Size.Large) price += 0.75m;
 
-                return _price;
+                return price;
             }
 
-            set => _price = value;
         }
 
         /// <summary>

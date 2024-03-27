@@ -24,9 +24,11 @@ namespace BuildYourBowl.PointOfSale
     /// </summary>
     public partial class MenuItemSelectionControl : UserControl
     {
+        public event EventHandler<CustomizeItemArgs>? MenuItemEvent;
         public MenuItemSelectionControl()
         {
             InitializeComponent();
+
         }
 
         // Event handler for menu item buttons
@@ -34,28 +36,106 @@ namespace BuildYourBowl.PointOfSale
         {
             if (DataContext is Order list && sender is Button button)
             {
-                if (button.Name == "CustomBowl") list.Add(new Bowl());
-                else if (button.Name == "CarnitasBowl") list.Add(new CarnitasBowl());
-                else if (button.Name == "GreenChickenBowl") list.Add(new GreenChickenBowl());
-                else if (button.Name == "SpicySteakBowl") list.Add(new SpicySteakBowl());
+                if (button.Name == "CustomBowl")
+                {
+                    Bowl b = new Bowl();
+                    list.Add(b);
+                    MenuItemEvent?.Invoke(this, new CustomizeItemArgs(b));
 
-                else if (button.Name == "CustomNachos") list.Add(new Nachos());
-                else if (button.Name == "ClassicNachos") list.Add(new ClassicNachos());
-                else if (button.Name == "ChickenFajitaNachos") list.Add(new ChickenFajitaNachos());
+                }
+                else if (button.Name == "CarnitasBowl")
+                {
+                    CarnitasBowl cb = new CarnitasBowl();
+                    list.Add(cb);
+                    MenuItemEvent?.Invoke(this, new CustomizeItemArgs(cb));
 
-                else if (button.Name == "Fries") list.Add(new Fries());
-                else if (button.Name == "RefriedBeans") list.Add(new RefriedBeans());
-                else if (button.Name == "StreetCorn") list.Add(new StreetCorn());
+                }
+                else if (button.Name == "GreenChickenBowl")
+                {
+                    GreenChickenBowl gb = new GreenChickenBowl();
+                    list.Add(gb);
+                    MenuItemEvent?.Invoke(this, new CustomizeItemArgs(gb));
 
-                else if (button.Name == "Horchata") list.Add(new Horchata());
-                else if (button.Name == "Milk") list.Add(new Milk());
-                else if (button.Name == "AguaFresca") list.Add(new AguaFresca());
+                }
+                else if (button.Name == "SpicySteakBowl")
+                {
+                    SpicySteakBowl sb = new SpicySteakBowl();
+                    list.Add(sb);
+                    MenuItemEvent?.Invoke(this, new CustomizeItemArgs(sb));
 
-                else if (button.Name == "ChickenNuggetsMeal") list.Add(new ChickenNuggetsMeal());
+                }
+
+                else if (button.Name == "CustomNachos")
+                {
+                    Nachos n = new Nachos();
+                    list.Add(n);
+                    MenuItemEvent?.Invoke(this, new CustomizeItemArgs(n));
+
+                }
+                else if (button.Name == "ClassicNachos")
+                {
+                    ClassicNachos cn = new ClassicNachos();
+                    list.Add(cn);
+                    MenuItemEvent?.Invoke(this, new CustomizeItemArgs(cn));
+
+                }
+                else if (button.Name == "ChickenFajitaNachos")
+                {
+                    ChickenFajitaNachos fn = new ChickenFajitaNachos();
+                    list.Add(fn);
+                    MenuItemEvent?.Invoke(this, new CustomizeItemArgs(fn));
+
+                }
+                else if (button.Name == "Fries")
+                {
+                    Fries f = new Fries();
+                    list.Add(f);
+                    MenuItemEvent?.Invoke(this, new CustomizeItemArgs(f));
+
+                }
+                else if (button.Name == "RefriedBeans")
+                {
+                    RefriedBeans rb = new RefriedBeans();
+                    list.Add(rb);
+                    MenuItemEvent?.Invoke(this, new CustomizeItemArgs(rb));
+                }
+                else if (button.Name == "StreetCorn")
+                {
+                    StreetCorn sc = new StreetCorn();
+                    list.Add(sc);
+                    MenuItemEvent?.Invoke(this, new CustomizeItemArgs(sc));
+                }
+
+                else if (button.Name == "Horchata")
+                {
+                    Horchata h = new Horchata();
+                    list.Add(h);
+                    MenuItemEvent?.Invoke(this, new CustomizeItemArgs(h));
+                }
+                else if (button.Name == "Milk")
+                {
+                    Milk m = new Milk();
+                    list.Add(m);
+                    MenuItemEvent?.Invoke(this, new CustomizeItemArgs(m));
+                }
+                else if (button.Name == "AguaFresca")
+                {
+                    AguaFresca af = new AguaFresca();
+                    list.Add(af);
+                    MenuItemEvent?.Invoke(this, new CustomizeItemArgs(af));
+                }
+
+                else if (button.Name == "ChickenNuggetsMeal")
+                {
+                    ChickenNuggetsMeal cm = new ChickenNuggetsMeal();
+                    list.Add(cm);
+                    MenuItemEvent?.Invoke(this, new CustomizeItemArgs(cm));
+
+                }
                 else if (button.Name == "CornDogBitesMeal") list.Add(new CornDogBitesMeal());
                 else if (button.Name == "SlidersMeal") list.Add(new SlidersMeal());
             }
 
-        }        
+        }
     }
 }
