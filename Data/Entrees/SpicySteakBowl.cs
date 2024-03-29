@@ -33,7 +33,8 @@ namespace BuildYourBowl.Data.Entrees
         /// </summary>
         public SpicySteakBowl()
         {
-            AdditionalIngredients = new Dictionary<Ingredient, IngredientItem>();
+            AdditionalIngredients.Clear();
+            //AdditionalIngredients = new Dictionary<Ingredient, IngredientItem>();
             AdditionalIngredients.Add(Ingredient.Steak, new IngredientItem(Ingredient.Steak));
             AdditionalIngredients.Add(Ingredient.Veggies, new IngredientItem(Ingredient.Veggies));
             AdditionalIngredients.Add(Ingredient.Queso, new IngredientItem(Ingredient.Queso));
@@ -50,6 +51,11 @@ namespace BuildYourBowl.Data.Entrees
 
             _salsaDefault = Salsa.Hot;
             SalsaType = Salsa.Hot;
+
+            foreach (IngredientItem ingredientItem in AdditionalIngredients.Values)
+            {
+                ingredientItem.PropertyChanged += HandleItemPropertyChanged;
+            }
         }
 
         /*

@@ -16,7 +16,6 @@ using BuildYourBowl.Data;
 using BuildYourBowl.Data.Entrees;
 using BuildYourBowl.Data.Sides;
 using BuildYourBowl.Data.Drinks;
-using BuildYourBowl.Data;
 
 
 
@@ -35,6 +34,7 @@ namespace BuildYourBowl.PointOfSale
 
             MenuItemDisplay.MenuItemEvent += HandleCustomEvent;
             OrderSummaryDisplay.EditItemEvent += HandleCustomEvent;
+            PaymentControlDisplay.NewMenu += HandleEvent;
 
         }
 
@@ -53,8 +53,38 @@ namespace BuildYourBowl.PointOfSale
             HorchataControlDisplay.Visibility = Visibility.Hidden;
             MilkControlDisplay.Visibility = Visibility.Hidden;
             AguaFrescaControlDisplay.Visibility = Visibility.Hidden;
+            PaymentControlDisplay.Visibility = Visibility.Hidden;
+        }
 
+        public void CompleteOrderClick(object sender, RoutedEventArgs e)
+        {
+            MenuItemDisplay.Visibility = Visibility.Hidden;
+            EntreeControlDisplay.Visibility = Visibility.Hidden;
+            FriesControlDisplay.Visibility = Visibility.Hidden;
+            RefriedBeansControlDisplay.Visibility = Visibility.Hidden;
+            StreetCornControlDisplay.Visibility = Visibility.Hidden;
+            HorchataControlDisplay.Visibility = Visibility.Hidden;
+            MilkControlDisplay.Visibility = Visibility.Hidden;
+            AguaFrescaControlDisplay.Visibility = Visibility.Hidden;
+            PaymentControlDisplay.Visibility = Visibility.Visible;
+            if (DataContext is Order order)
+            {
+                PaymentControlDisplay.DataContext = new PaymentViewModel(order);
+            }
+        }
 
+        private void HandleEvent(object? sender, RoutedEventArgs? e)
+        {
+            MenuItemDisplay.Visibility = Visibility.Visible;
+            EntreeControlDisplay.Visibility = Visibility.Hidden;
+            FriesControlDisplay.Visibility = Visibility.Hidden;
+            RefriedBeansControlDisplay.Visibility = Visibility.Hidden;
+            StreetCornControlDisplay.Visibility = Visibility.Hidden;
+            HorchataControlDisplay.Visibility = Visibility.Hidden;
+            MilkControlDisplay.Visibility = Visibility.Hidden;
+            AguaFrescaControlDisplay.Visibility = Visibility.Hidden;
+            PaymentControlDisplay.Visibility = Visibility.Hidden;
+            CancelOrderClick(sender!, e!);
         }
 
         private void HandleCustomEvent(object? sender, CustomizeItemArgs? e)
@@ -66,16 +96,24 @@ namespace BuildYourBowl.PointOfSale
 
             switch (e?.Item)
             {
+                case Entree:
+                    EntreeControlDisplay.DataContext = menuItem;
+                    MenuItemDisplay.Visibility = Visibility.Hidden;
+                    EntreeControlDisplay.Visibility = Visibility.Visible;
+                    break;
+                /*
                 case CarnitasBowl:
                     EntreeControlDisplay.DataContext = menuItem;
                     MenuItemDisplay.Visibility = Visibility.Hidden;
                     EntreeControlDisplay.Visibility = Visibility.Visible;
+                    ///EntreeControlDisplay.LoadChoices();
                     break;
 
                 case GreenChickenBowl:
                     EntreeControlDisplay.DataContext = menuItem;
                     MenuItemDisplay.Visibility = Visibility.Hidden;
                     EntreeControlDisplay.Visibility = Visibility.Visible;
+                    ///EntreeControlDisplay.LoadChoices();
                     break;
 
                 case SpicySteakBowl:
@@ -85,7 +123,6 @@ namespace BuildYourBowl.PointOfSale
                     break;
 
                 case Bowl:
-
                     EntreeControlDisplay.DataContext = menuItem;
                     MenuItemDisplay.Visibility = Visibility.Hidden;
                     EntreeControlDisplay.Visibility = Visibility.Visible;
@@ -107,7 +144,13 @@ namespace BuildYourBowl.PointOfSale
                     EntreeControlDisplay.DataContext = menuItem;
                     MenuItemDisplay.Visibility = Visibility.Hidden;
                     EntreeControlDisplay.Visibility = Visibility.Visible;
-                    break;
+                    /*
+                    if (menuItem is Entree entree7)
+                    {
+                        EntreeControlDisplay.restGrid.DataContext = entree7.AdditionalIngredients.Values;
+                    }
+                    
+                    break;*/
 
                 case Fries:
                     FriesControlDisplay.DataContext = menuItem;

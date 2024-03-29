@@ -20,6 +20,20 @@ namespace BuildYourBowl.Data
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        protected void HandleItemPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Price)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Calories)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Instructions)));
+        }
+
+        public Entree()
+        {
+            foreach (IngredientItem ingredientItem in AdditionalIngredients.Values)
+            {
+                ingredientItem.PropertyChanged += HandleItemPropertyChanged;
+            }
+        }
 
         /// <summary>
         /// Abstract property that tracks the name of the entree menu item
@@ -117,6 +131,7 @@ namespace BuildYourBowl.Data
         /// </summary>
         public abstract IngredientItem BaseIngredient { get;  }
 
+        /*
         /// <summary>
         /// Abstract property that tracks the additional ingredients in the entree menu item
         /// </summary>
@@ -130,6 +145,22 @@ namespace BuildYourBowl.Data
             {Ingredient.Chicken, new IngredientItem(Ingredient.Chicken)},
             {Ingredient.Steak, new IngredientItem(Ingredient.Steak)},
             {Ingredient.Carnitas, new IngredientItem(Ingredient.Carnitas)}
-        };   
+        };*/
+
+
+        /// <summary>
+        /// Abstract property that tracks the additional ingredients in the entree menu item
+        /// </summary>
+        public virtual Dictionary<Ingredient, IngredientItem> AdditionalIngredients { get; set; } = new() {
+            {Ingredient.BlackBeans, new IngredientItem(Ingredient.BlackBeans)},
+            {Ingredient.PintoBeans, new IngredientItem(Ingredient.PintoBeans)},
+            {Ingredient.Queso, new IngredientItem(Ingredient.Queso)},
+            {Ingredient.Veggies, new IngredientItem(Ingredient.Veggies)},
+            {Ingredient.SourCream, new IngredientItem(Ingredient.SourCream)},
+            {Ingredient.Guacamole, new IngredientItem(Ingredient.Guacamole)},
+            {Ingredient.Chicken, new IngredientItem(Ingredient.Chicken)},
+            {Ingredient.Steak, new IngredientItem(Ingredient.Steak)},
+            {Ingredient.Carnitas, new IngredientItem(Ingredient.Carnitas)}
+        };
     }
 }

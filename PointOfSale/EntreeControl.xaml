@@ -7,19 +7,43 @@
              xmlns:data="clr-namespace:BuildYourBowl.Data.Entrees;assembly=BuildYourBowl.Data" 
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="800" Background="Cornsilk">
-    <Grid Margin="35">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="4*"/>
-        </Grid.RowDefinitions>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Text="{Binding Path=Name}" FontSize="24" FontWeight="Bold" Margin="0,10,0,10" VerticalAlignment="Bottom"/>
-        <StackPanel Grid.Row="1" >
-            <TextBlock Text="{Binding Path=Description}" Margin="0,0,0,15"/>
-            <TextBlock Text="Salsa Choice:" Margin="0,15,0,5"/>
-            <ComboBox ItemsSource="{Binding Source={StaticResource salsas}}" SelectedItem="{Binding Path=SalsaType, Mode=TwoWay}" Width="100" Height="20" HorizontalAlignment="Left" Margin="0,0,0,15"/>
-            <TextBlock Text="{Binding Path=Calories, StringFormat='{}Calories: {0}'}" Margin="0,15,0,15"/>
-        </StackPanel>
+        <Grid Grid.Column="0"  Margin="35">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="4*"/>
+            </Grid.RowDefinitions>
 
+            <TextBlock Grid.Row="0" Text="{Binding Path=Name}" FontSize="24" FontWeight="Bold" Margin="0,10,0,10" VerticalAlignment="Bottom"/>
+            <StackPanel Grid.Row="1" >
+                <TextBlock Text="{Binding Path=Description}" Margin="0,0,0,15"/>
+                <TextBlock Text="Salsa Choice:" Margin="0,15,0,5"/>
+                <ComboBox ItemsSource="{Binding Source={StaticResource salsas}}" SelectedItem="{Binding Path=SalsaType, Mode=TwoWay}" Width="100" Height="20" HorizontalAlignment="Left" Margin="0,0,0,15"/>
+                <TextBlock Text="{Binding Path=Calories, StringFormat='{}Calories: {0}'}" Margin="0,15,0,15"/>
+            </StackPanel>
+        </Grid>
+
+        
+
+        <StackPanel Name="itemsStack" Grid.Column="1"  Margin="35">
+            <TextBlock>Choose ingredients:</TextBlock>
+                <ListView Name="itemsLV" ItemsSource="{Binding Path=AdditionalIngredients.Values}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox IsChecked="{Binding Path=Included}"/>
+                                <TextBlock Text="{Binding Path=Name}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+       
     </Grid>
+    
 </UserControl>

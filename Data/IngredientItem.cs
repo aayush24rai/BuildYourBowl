@@ -4,14 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BuildYourBowl.Data.Enums;
+using System.ComponentModel;
+using System.Diagnostics;
 
 namespace BuildYourBowl.Data
 {
     /// <summary>
     /// Class to implement Ingredient items present in the menu items
     /// </summary>
-    public class IngredientItem
+    public class IngredientItem : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         /// <summary>
         /// The type of the ingredient
         /// </summary>
@@ -91,7 +99,12 @@ namespace BuildYourBowl.Data
         public bool Included
         {
             get => _included;
-            set => _included = value;
+            set
+            {
+                _included = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Included)));
+
+            }
         }
 
         /// <summary>
@@ -99,13 +112,19 @@ namespace BuildYourBowl.Data
         /// </summary>
         private bool _default = false;
 
+
         /// <summary>
         /// Whether this ingredient is included in its containing menu item by default
         /// </summary>
-        public bool Defualt
+        public bool Default
         {
             get => _default;
-            set => _default = value;
+            set
+            {
+                _default = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Default)));
+
+            }
         }
 
         /// <summary>

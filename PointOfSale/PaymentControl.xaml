@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="BuildYourBowl.PointOfSale.PaymentControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BuildYourBowl.PointOfSale"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="800">
+    <Grid Margin="35">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Order Summary" FontSize="24" FontWeight="Bold" Margin="0,10,0,10" VerticalAlignment="Top"/>
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="{Binding Path=Subtotal, StringFormat='{}Subtotal: ${0}'}" Margin="0,0,0,15"/>
+            <TextBlock Text="{Binding Path=Tax, StringFormat='{}Tax: ${0}'}" Margin="0,0,0,15"/>
+            <TextBlock Text="{Binding Path=Total, StringFormat='{}Total: ${0}'}" Margin="0,0,0,15"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center">
+            <TextBlock Margin="0,0,10,0">Enter payment amount: $</TextBlock>
+            <TextBox Width="50">
+                <TextBox.Text>
+                    <Binding Path="Paid" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <ExceptionValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBlock Text="{Binding Path=InValidText}" Margin="15,0,0,0" FontWeight="Bold"/>
+        </StackPanel>
+
+        <Button Grid.Row="3" Height="50" Width="300" Click="FinalizePaymentClick" IsEnabled="{Binding Path=IsValidS}">Finalize Payment and Print Receipt</Button>
+        <TextBlock Grid.Row="4" Text="{Binding Path=Change, StringFormat='{}Change: ${0}'}" Margin="0,0,0,15"/>
+
+
+    </Grid>
+</UserControl>

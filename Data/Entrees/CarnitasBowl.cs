@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace BuildYourBowl.Data.Entrees
     /// </summary>
     public class CarnitasBowl : Bowl
     {
+        
         /// <summary>
         /// The name of the carnitas bowl instance
         /// </summary>
@@ -33,7 +35,8 @@ namespace BuildYourBowl.Data.Entrees
         /// </summary>
         public CarnitasBowl() 
         {
-            AdditionalIngredients = new Dictionary<Ingredient, IngredientItem>();
+            AdditionalIngredients.Clear();
+            //AdditionalIngredients = new Dictionary<Ingredient, IngredientItem>();
             AdditionalIngredients.Add(Ingredient.Carnitas, new IngredientItem(Ingredient.Carnitas));
             AdditionalIngredients.Add(Ingredient.Veggies, new IngredientItem(Ingredient.Veggies));
             AdditionalIngredients.Add(Ingredient.Queso, new IngredientItem(Ingredient.Queso));
@@ -50,6 +53,11 @@ namespace BuildYourBowl.Data.Entrees
 
             _salsaDefault = Salsa.Medium;
             SalsaType = Salsa.Medium;
+
+            foreach (IngredientItem ingredientItem in AdditionalIngredients.Values)
+            {
+                ingredientItem.PropertyChanged += HandleItemPropertyChanged;
+            }
         }
 
         //Salsa here

@@ -33,7 +33,8 @@ namespace BuildYourBowl.Data.Entrees
         /// </summary>
         public ChickenFajitaNachos()
         {
-            AdditionalIngredients = new Dictionary<Ingredient, IngredientItem>();
+            AdditionalIngredients.Clear();
+            //AdditionalIngredients = new Dictionary<Ingredient, IngredientItem>();
             AdditionalIngredients.Add(Ingredient.Chicken, new IngredientItem(Ingredient.Chicken));
             AdditionalIngredients.Add(Ingredient.Veggies, new IngredientItem(Ingredient.Veggies));
             AdditionalIngredients.Add(Ingredient.Queso, new IngredientItem(Ingredient.Queso));
@@ -48,6 +49,11 @@ namespace BuildYourBowl.Data.Entrees
 
             _salsaDefault = Salsa.Medium;
             SalsaType = Salsa.Medium;
+
+            foreach (IngredientItem ingredientItem in AdditionalIngredients.Values)
+            {
+                ingredientItem.PropertyChanged += HandleItemPropertyChanged;
+            }
         }
 
         /*

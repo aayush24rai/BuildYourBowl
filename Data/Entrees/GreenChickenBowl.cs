@@ -28,7 +28,8 @@ namespace BuildYourBowl.Data.Entrees
         /// </summary>
         public GreenChickenBowl()
         {
-            AdditionalIngredients = new Dictionary<Ingredient, IngredientItem>();
+            AdditionalIngredients.Clear();
+            //AdditionalIngredients = new Dictionary<Ingredient, IngredientItem>();
             AdditionalIngredients.Add(Ingredient.Chicken, new IngredientItem(Ingredient.Chicken));
             AdditionalIngredients.Add(Ingredient.BlackBeans, new IngredientItem(Ingredient.BlackBeans));
             AdditionalIngredients.Add(Ingredient.Veggies, new IngredientItem(Ingredient.Veggies));
@@ -45,6 +46,11 @@ namespace BuildYourBowl.Data.Entrees
 
             _salsaDefault = Salsa.Green;
             SalsaType = Salsa.Green;
+
+            foreach (IngredientItem ingredientItem in AdditionalIngredients.Values)
+            {
+                ingredientItem.PropertyChanged += HandleItemPropertyChanged;
+            }
         }
 
 
