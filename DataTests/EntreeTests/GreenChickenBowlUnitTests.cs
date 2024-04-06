@@ -167,5 +167,45 @@ namespace BuildYourBowl.DataTests.EntreeTests
             GreenChickenBowl bowl = new();
             Assert.Equal("Green Chicken Bowl", bowl.ToString());
         }
+
+        [Theory]
+        [InlineData(Salsa.Mild, "Instructions")]
+        [InlineData(Salsa.Medium, "Instructions")]
+        [InlineData(Salsa.Hot, "Instructions")]
+        [InlineData(Salsa.Green, "Instructions")]
+        [InlineData(Salsa.None, "Instructions")]
+        public void ChangingSalsaShouldNotifyOfPropertyChanges(Salsa salsa, string propertyName)
+        {
+            GreenChickenBowl bowl = new();
+            Assert.PropertyChanged(bowl, propertyName, () => { bowl.SalsaType = salsa; });
+        }
+
+        [Theory]
+        [InlineData(Ingredient.Chicken, true, "Instructions")]
+        [InlineData(Ingredient.Chicken, false, "Instructions")]
+        [InlineData(Ingredient.Veggies, true, "Instructions")]
+        [InlineData(Ingredient.Veggies, false, "Instructions")]
+        [InlineData(Ingredient.Queso, true, "Instructions")]
+        [InlineData(Ingredient.Queso, false, "Instructions")]
+        [InlineData(Ingredient.BlackBeans, true, "Instructions")]
+        [InlineData(Ingredient.BlackBeans, false, "Instructions")]
+        [InlineData(Ingredient.Guacamole, true, "Instructions")]
+        [InlineData(Ingredient.Guacamole, false, "Instructions")]
+        [InlineData(Ingredient.SourCream, true, "Instructions")]
+        [InlineData(Ingredient.SourCream, false, "Instructions")]
+        public void ChangingIngredientsShouldNotifyOfPropertyChanges(Ingredient ing, bool included, string propertyName)
+        {
+            GreenChickenBowl bowl = new();
+            Assert.PropertyChanged(bowl, propertyName, () => { bowl.AdditionalIngredients[ing].Included = included; });
+        }
+
+        [Theory]
+        [InlineData(Ingredient.Guacamole, true, "Price")]
+        [InlineData(Ingredient.Guacamole, false, "Price")]
+        public void ChangingGuacamoleShouldNotifyOfPropertyChanges(Ingredient ing, bool included, string propertyName)
+        {
+            GreenChickenBowl bowl = new();
+            Assert.PropertyChanged(bowl, propertyName, () => { bowl.AdditionalIngredients[ing].Included = included; });
+        }
     }
 }

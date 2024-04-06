@@ -106,5 +106,37 @@ namespace BuildYourBowl.DataTests.DrinksTests
             Horchata horchata = new();
             Assert.Equal("Horchata", horchata.ToString());
         }
+
+        [Theory]
+        [InlineData(true, "Calories")]
+        [InlineData(false, "Calories")]
+        [InlineData(true, "Instructions")]
+        [InlineData(false, "Instructions")]
+        public void ChangingChocolateShouldNotifyOfPropertyChanges(bool ice, string propertyName)
+        {
+            Horchata drink = new();
+            Assert.PropertyChanged(drink, propertyName, () => { drink.Ice = ice; });
+        }
+
+        [Theory]
+        [InlineData(Size.Kids, "Price")]
+        [InlineData(Size.Small, "Price")]
+        [InlineData(Size.Medium, "Price")]
+        [InlineData(Size.Large, "Price")]
+        [InlineData(Size.Kids, "Calories")]
+        [InlineData(Size.Small, "Calories")]
+        [InlineData(Size.Medium, "Calories")]
+        [InlineData(Size.Large, "Calories")]
+        [InlineData(Size.Kids, "Instructions")]
+        [InlineData(Size.Small, "Instructions")]
+        [InlineData(Size.Medium, "Instructions")]
+        [InlineData(Size.Large, "Instructions")]
+        public void ChangingSizeShouldNotifyOfPropertyChanges(Size size, string propertyName)
+        {
+            Horchata drink = new();
+            Assert.PropertyChanged(drink, propertyName, () => { drink.SizeChoice = size; });
+        }
+
+
     }
 }

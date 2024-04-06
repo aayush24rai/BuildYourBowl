@@ -33,7 +33,7 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBlock Text="{Binding Path=InValidText}" Margin="15,0,0,0" FontWeight="Bold"/>
+            <TextBlock Text="{Binding Path=InValidText}" Margin="15,0,0,0" FontWeight="Bold" Foreground="Red"/>
         </StackPanel>
 
         <Button Grid.Row="3" Height="50" Width="300" Click="FinalizePaymentClick" IsEnabled="{Binding Path=IsValidS}">Finalize Payment and Print Receipt</Button>

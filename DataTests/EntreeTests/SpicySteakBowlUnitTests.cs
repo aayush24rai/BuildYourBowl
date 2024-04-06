@@ -162,5 +162,46 @@ namespace BuildYourBowl.DataTests.EntreeTests
             SpicySteakBowl bowl = new();
             Assert.Equal("Spicy steak bowl", bowl.ToString());
         }
+
+        [Theory]
+        [InlineData(Salsa.Mild, "Instructions", "Calories")]
+        [InlineData(Salsa.Medium, "Instructions", "Calories")]
+        [InlineData(Salsa.Hot, "Instructions", "Calories")]
+        [InlineData(Salsa.Green, "Instructions", "Calories")]
+        [InlineData(Salsa.None, "Instructions", "Calories")]
+        public void ChangingSalsaShouldNotifyOfPropertyChanges(Salsa salsa, string propertyName, string propertyName2)
+        {
+            SpicySteakBowl bowl = new();
+            Assert.PropertyChanged(bowl, propertyName, () => { bowl.SalsaType = salsa; });
+            Assert.PropertyChanged(bowl, propertyName2, () => { bowl.SalsaType = salsa; });
+        }
+
+        [Theory]
+        [InlineData(Ingredient.Steak, true, "Instructions", "Calories")]
+        [InlineData(Ingredient.Steak, false, "Instructions", "Calories")]
+        [InlineData(Ingredient.Veggies, true, "Instructions", "Calories")]
+        [InlineData(Ingredient.Veggies, false, "Instructions", "Calories")]
+        [InlineData(Ingredient.Queso, true, "Instructions", "Calories")]
+        [InlineData(Ingredient.Queso, false, "Instructions", "Calories")]
+        [InlineData(Ingredient.PintoBeans, true, "Instructions", "Calories")]
+        [InlineData(Ingredient.PintoBeans, false, "Instructions", "Calories")]
+        [InlineData(Ingredient.Guacamole, true, "Instructions", "Calories")]
+        [InlineData(Ingredient.Guacamole, false, "Instructions", "Calories")]
+        [InlineData(Ingredient.SourCream, true, "Instructions", "Calories")]
+        [InlineData(Ingredient.SourCream, false, "Instructions", "Calories")]
+        public void ChangingIngredientsShouldNotifyOfPropertyChanges(Ingredient ing, bool included, string propertyName, string propertyName2)
+        {
+            SpicySteakBowl bowl = new();
+            Assert.PropertyChanged(bowl, propertyName, () => { bowl.AdditionalIngredients[ing].Included = included; });
+        }
+
+        [Theory]
+        [InlineData(Ingredient.Guacamole, true, "Price")]
+        [InlineData(Ingredient.Guacamole, false, "Price")]
+        public void ChangingGuacamoleShouldNotifyOfPropertyChanges(Ingredient ing, bool included, string propertyName)
+        {
+            SpicySteakBowl bowl = new();
+            Assert.PropertyChanged(bowl, propertyName, () => { bowl.AdditionalIngredients[ing].Included = included; });
+        }
     }
 }

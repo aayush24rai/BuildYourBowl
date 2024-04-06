@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace BuildYourBowl.DataTests.KidsMealTests
 {
@@ -125,6 +126,189 @@ namespace BuildYourBowl.DataTests.KidsMealTests
         {
             ChickenNuggetsMeal meal = new();
             Assert.Equal("Chicken Nuggets Kids Meal", meal.ToString());
+        }
+
+        internal class MockSide : Side, INotifyPropertyChanged
+        {
+            private Size _size;
+
+            public override string Name { get; } = "Mock Side";
+            public override string Description { get; } = "Mock side description";
+
+            private decimal _price = 1.99m;
+            public decimal Price
+            {
+                get { return _price; }
+                set
+                {
+                    if (_price != value)
+                    {
+                        _price = value;
+                        OnPropertyChanged(nameof(Price));
+                    }
+                }
+            }
+
+            private uint _calories = 100;
+            public uint Calories
+            {
+                get { return _calories; }
+                set
+                {
+                    if (_calories != value)
+                    {
+                        _calories = value;
+                        OnPropertyChanged(nameof(Calories));
+                    }
+                }
+            }
+
+            private IEnumerable<string> _instructions = new List<string> { "Mock preparation" };
+            public override IEnumerable<string> Instructions
+            {
+                get { return _instructions; }
+            }
+            public Size Size
+            {
+                get => _size;
+                set
+                {
+                    if (_size != value)
+                    {
+                        _size = value;
+                        OnPropertyChanged(nameof(Size));
+                        OnPropertyChanged(nameof(Price));
+                        OnPropertyChanged(nameof(Calories));
+                        OnPropertyChanged(nameof(Instructions));
+                    }
+                }
+            }
+
+            public MockSide()
+            {
+                Size = Size.Small;
+                OnPropertyChanged(nameof(Size));
+            }
+
+            public event PropertyChangedEventHandler? PropertyChanged;
+
+            protected void OnPropertyChanged(string propertyName)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+        internal class MockDrink : INotifyPropertyChanged
+        {
+            public MockDrink()
+            {
+                DrinkSize = Size.Small;
+                OnPropertyChanged(nameof(DrinkSize));
+            }
+            /// <summary>
+            /// Name property
+            /// </summary>
+            public string Name { get; }
+            /// <summary>
+            /// Description property
+            /// </summary>
+            ///
+            public event PropertyChangedEventHandler? PropertyChanged;
+
+            protected void OnPropertyChanged(string propertyName)
+            {
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+            public string Description { get; }
+            private uint _calories = 100;
+            private decimal _price = 1.99m;
+            private Size _drinkSize;
+
+            public decimal Price
+            {
+                get { return _price; }
+                set
+                {
+                    if (_price != value)
+                    {
+                        _price = value;
+                        OnPropertyChanged(nameof(Price));
+                    }
+                }
+            }
+
+            public uint Calories
+            {
+                get { return _calories; }
+                set
+                {
+                    if (_calories != value)
+                    {
+                        _calories = value;
+                        OnPropertyChanged(nameof(Calories));
+                    }
+                }
+            }
+
+            public Size DrinkSize
+            {
+                get => _drinkSize;
+                set
+                {
+                    if (_drinkSize != value)
+                    {
+                        _drinkSize = value;
+                        OnPropertyChanged(nameof(DrinkSize));
+                        OnPropertyChanged(nameof(Price));
+                        OnPropertyChanged(nameof(Calories));
+                        OnPropertyChanged(nameof(Instructions));
+                    }
+                }
+            }
+
+            public IEnumerable<string> Instructions { get; } = new List<string> { "Mock preparation information" };
+
+            public override string ToString()
+            {
+                return Name;
+            }
+        }
+
+        [Theory]
+        [InlineData(Size.Kids, "Size")]
+        [InlineData(Size.Medium, "Size")]
+        [InlineData(Size.Large, "Size")]
+        [InlineData(Size.Kids, "Price")]
+        [InlineData(Size.Medium, "Price")]
+        [InlineData(Size.Large, "Price")]
+        [InlineData(Size.Kids, "Calories")]
+        [InlineData(Size.Medium, "Calories")]
+        [InlineData(Size.Large, "Calories")]
+        [InlineData(Size.Kids, "Instructions")]
+        [InlineData(Size.Medium, "Instructions")]
+        [InlineData(Size.Large, "Instructions")]
+        public void NotifySizeChangeSide(Size size, string propertyName)
+        {
+            MockSide mockSide = new MockSide();
+            Assert.PropertyChanged(mockSide, propertyName, () => {mockSide.Size = size;});
+        }
+
+        [Theory]
+        [InlineData(Size.Kids, "DrinkSize")]
+        [InlineData(Size.Medium, "DrinkSize")]
+        [InlineData(Size.Large, "DrinkSize")]
+        [InlineData(Size.Kids, "Price")]
+        [InlineData(Size.Medium, "Price")]
+        [InlineData(Size.Large, "Price")]
+        [InlineData(Size.Kids, "Calories")]
+        [InlineData(Size.Medium, "Calories")]
+        [InlineData(Size.Large, "Calories")]
+        [InlineData(Size.Kids, "Instructions")]
+        [InlineData(Size.Medium, "Instructions")]
+        [InlineData(Size.Large, "Instructions")]
+        public void NotifySizeChangeDrink(Size size, string propertyName)
+        {
+            MockDrink d = new();
+            Assert.PropertyChanged(d, propertyName, () => {d.DrinkSize = size;});
         }
     }
 }

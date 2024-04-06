@@ -163,5 +163,43 @@ namespace BuildYourBowl.DataTests.EntreeTests
             ChickenFajitaNachos nachos = new();
             Assert.Equal("Chicken fajita nachos", nachos.ToString());
         }
+
+        [Theory]
+        [InlineData(Salsa.Mild, "Instructions")]
+        [InlineData(Salsa.Medium, "Instructions")]
+        [InlineData(Salsa.Hot, "Instructions")]
+        [InlineData(Salsa.Green, "Instructions")]
+        [InlineData(Salsa.None, "Instructions")]
+        public void ChangingSalsaShouldNotifyOfPropertyChanges(Salsa salsa, string propertyName)
+        {
+            ChickenFajitaNachos nachos = new();
+            Assert.PropertyChanged(nachos, propertyName, () => { nachos.SalsaType = salsa; });
+        }
+
+        [Theory]
+        [InlineData(Ingredient.Chicken, true, "Instructions")]
+        [InlineData(Ingredient.Chicken, false, "Instructions")]
+        [InlineData(Ingredient.Veggies, true, "Instructions")]
+        [InlineData(Ingredient.Veggies, false, "Instructions")]
+        [InlineData(Ingredient.Queso, true, "Instructions")]
+        [InlineData(Ingredient.Queso, false, "Instructions")]
+        [InlineData(Ingredient.Guacamole, true, "Instructions")]
+        [InlineData(Ingredient.Guacamole, false, "Instructions")]
+        [InlineData(Ingredient.SourCream, true, "Instructions")]
+        [InlineData(Ingredient.SourCream, false, "Instructions")]
+        public void ChangingIngredientsShouldNotifyOfPropertyChanges(Ingredient ing, bool included, string propertyName)
+        {
+            ChickenFajitaNachos nachos = new();
+            Assert.PropertyChanged(nachos, propertyName, () => { nachos.AdditionalIngredients[ing].Included = included; });
+        }
+
+        [Theory]
+        [InlineData(Ingredient.Guacamole, true, "Price")]
+        [InlineData(Ingredient.Guacamole, false, "Price")]
+        public void ChangingGuacamoleShouldNotifyOfPropertyChanges(Ingredient ing, bool included, string propertyName)
+        {
+            ChickenFajitaNachos nachos = new();
+            Assert.PropertyChanged(nachos, propertyName, () => { nachos.AdditionalIngredients[ing].Included = included; });
+        }
     }
 }

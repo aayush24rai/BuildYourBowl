@@ -53,6 +53,7 @@ namespace BuildYourBowl.PointOfSale
             HorchataControlDisplay.Visibility = Visibility.Hidden;
             MilkControlDisplay.Visibility = Visibility.Hidden;
             AguaFrescaControlDisplay.Visibility = Visibility.Hidden;
+            KidsMealControlDisplay.Visibility = Visibility.Hidden;
             PaymentControlDisplay.Visibility = Visibility.Hidden;
         }
 
@@ -66,6 +67,7 @@ namespace BuildYourBowl.PointOfSale
             HorchataControlDisplay.Visibility = Visibility.Hidden;
             MilkControlDisplay.Visibility = Visibility.Hidden;
             AguaFrescaControlDisplay.Visibility = Visibility.Hidden;
+            KidsMealControlDisplay.Visibility = Visibility.Hidden;
             PaymentControlDisplay.Visibility = Visibility.Visible;
             if (DataContext is Order order)
             {

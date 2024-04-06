@@ -103,5 +103,35 @@ namespace BuildYourBowl.DataTests.DrinksTests
             Milk milk = new();
             Assert.Equal("Milk", milk.ToString());
         }
+
+        [Theory]
+        [InlineData(true, "Calories")]
+        [InlineData(false, "Calories")]
+        [InlineData(true, "Instructions")]
+        [InlineData(false, "Instructions")]
+        public void ChangingChocolateShouldNotifyOfPropertyChanges(bool chocolate, string propertyName)
+        {
+            Milk drink = new();
+            Assert.PropertyChanged(drink, propertyName, () => { drink.Chocolate = chocolate; });
+        }
+
+        [Theory]
+        [InlineData(Size.Kids, "Price")]
+        [InlineData(Size.Small, "Price")]
+        [InlineData(Size.Medium, "Price")]
+        [InlineData(Size.Large, "Price")]
+        [InlineData(Size.Kids, "Calories")]
+        [InlineData(Size.Small, "Calories")]
+        [InlineData(Size.Medium, "Calories")]
+        [InlineData(Size.Large, "Calories")]
+        [InlineData(Size.Kids, "Instructions")]
+        [InlineData(Size.Small, "Instructions")]
+        [InlineData(Size.Medium, "Instructions")]
+        [InlineData(Size.Large, "Instructions")]
+        public void ChangingSizeShouldNotifyOfPropertyChanges(Size size, string propertyName)
+        {
+            Milk drink = new();
+            Assert.PropertyChanged(drink, propertyName, () => { drink.SizeChoice = size; });
+        }
     }
 }

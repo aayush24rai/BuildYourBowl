@@ -166,5 +166,87 @@ namespace BuildYourBowl.DataTests.EntreeTests
             Assert.Equal("Carnitas Bowl", bowl.ToString());
         }
 
+        [Theory]        
+        [InlineData(Salsa.Mild, "Instructions", "Calories")]
+        [InlineData(Salsa.Medium, "Instructions", "Calories")]
+        [InlineData(Salsa.Hot, "Instructions", "Calories")]
+        [InlineData(Salsa.Green, "Instructions", "Calories")]
+        [InlineData(Salsa.None, "Instructions", "Calories")]
+        
+        /*
+        [InlineData(Size.Kids, "Price")]
+        [InlineData(Size.Small, "Price")]
+        [InlineData(Size.Medium, "Price")]
+        [InlineData(Size.Large, "Price")]
+        [InlineData(Size.Kids, "Calories")]
+        [InlineData(Size.Small, "Calories")]
+        [InlineData(Size.Medium, "Calories")]
+        [InlineData(Size.Large, "Calories")]
+        [InlineData(Size.Kids, "Instructions")]
+        [InlineData(Size.Small, "Instructions")]
+        [InlineData(Size.Medium, "Instructions")]
+        [InlineData(Size.Large, "Instructions")]
+        */
+        public void ChangingSalsaShouldNotifyOfPropertyChanges(Salsa salsa, string propertyName, string propertyName2)
+        {
+            CarnitasBowl bowl = new();
+            Assert.PropertyChanged(bowl, propertyName, () => { bowl.SalsaType = salsa; });
+        }
+
+        [Theory]
+        [InlineData(Ingredient.Carnitas, true, "Instructions")]
+        [InlineData(Ingredient.Carnitas, false, "Instructions")]
+        [InlineData(Ingredient.Veggies, true, "Instructions")]
+        [InlineData(Ingredient.Veggies, false, "Instructions")]
+        [InlineData(Ingredient.Queso, true, "Instructions")]
+        [InlineData(Ingredient.Queso, false, "Instructions")]
+        [InlineData(Ingredient.PintoBeans, true, "Instructions")]
+        [InlineData(Ingredient.PintoBeans, false, "Instructions")]
+        [InlineData(Ingredient.Guacamole, true, "Instructions")]
+        [InlineData(Ingredient.Guacamole, false, "Instructions")]
+        [InlineData(Ingredient.SourCream, true, "Instructions")]
+        [InlineData(Ingredient.SourCream, false, "Instructions")]
+        /*
+        [InlineData(Size.Kids, "Price")]
+        [InlineData(Size.Small, "Price")]
+        [InlineData(Size.Medium, "Price")]
+        [InlineData(Size.Large, "Price")]
+        [InlineData(Size.Kids, "Calories")]
+        [InlineData(Size.Small, "Calories")]
+        [InlineData(Size.Medium, "Calories")]
+        [InlineData(Size.Large, "Calories")]
+        [InlineData(Size.Kids, "Instructions")]
+        [InlineData(Size.Small, "Instructions")]
+        [InlineData(Size.Medium, "Instructions")]
+        [InlineData(Size.Large, "Instructions")]
+        */
+        public void ChangingIngredientsShouldNotifyOfPropertyChanges(Ingredient ing, bool included, string propertyName)
+        {
+            CarnitasBowl bowl = new();
+            Assert.PropertyChanged(bowl, propertyName, () => { bowl.AdditionalIngredients[ing].Included = included; });
+        }
+
+        [Theory]
+        [InlineData(Ingredient.Guacamole, true, "Price")]
+        [InlineData(Ingredient.Guacamole, false, "Price")]
+        /*
+        [InlineData(Size.Kids, "Price")]
+        [InlineData(Size.Small, "Price")]
+        [InlineData(Size.Medium, "Price")]
+        [InlineData(Size.Large, "Price")]
+        [InlineData(Size.Kids, "Calories")]
+        [InlineData(Size.Small, "Calories")]
+        [InlineData(Size.Medium, "Calories")]
+        [InlineData(Size.Large, "Calories")]
+        [InlineData(Size.Kids, "Instructions")]
+        [InlineData(Size.Small, "Instructions")]
+        [InlineData(Size.Medium, "Instructions")]
+        [InlineData(Size.Large, "Instructions")]
+        */
+        public void ChangingGuacamoleShouldNotifyOfPropertyChanges(Ingredient ing, bool included, string propertyName)
+        {
+            CarnitasBowl bowl = new();
+            Assert.PropertyChanged(bowl, propertyName, () => { bowl.AdditionalIngredients[ing].Included = included; });
+        }
     }
 }
