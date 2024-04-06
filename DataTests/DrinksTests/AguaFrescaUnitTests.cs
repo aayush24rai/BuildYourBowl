@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BuildYourBowl.Data.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -117,6 +118,58 @@ namespace BuildYourBowl.DataTests.DrinksTests
         {
             AguaFresca drink = new();
             Assert.Equal("Agua Fresca", drink.ToString());
+        }
+
+        [Theory]
+        [InlineData(true, "Calories")]
+        [InlineData(false, "Calories")]
+        [InlineData(true, "Instructions")]
+        [InlineData(false, "Instructions")]
+        public void ChangingChocolateShouldNotifyOfPropertyChanges(bool ice, string propertyName)
+        {
+            AguaFresca drink = new();
+            Assert.PropertyChanged(drink, propertyName, () => { drink.Ice = ice; });
+        }
+
+        [Theory]
+        [InlineData(Size.Kids, "Price")]
+        [InlineData(Size.Small, "Price")]
+        [InlineData(Size.Medium, "Price")]
+        [InlineData(Size.Large, "Price")]
+        [InlineData(Size.Kids, "Calories")]
+        [InlineData(Size.Small, "Calories")]
+        [InlineData(Size.Medium, "Calories")]
+        [InlineData(Size.Large, "Calories")]
+        [InlineData(Size.Kids, "Instructions")]
+        [InlineData(Size.Small, "Instructions")]
+        [InlineData(Size.Medium, "Instructions")]
+        [InlineData(Size.Large, "Instructions")]
+        public void ChangingSizeShouldNotifyOfPropertyChanges(Size size, string propertyName)
+        {
+            AguaFresca drink = new();
+            Assert.PropertyChanged(drink, propertyName, () => { drink.SizeChoice = size; });
+        }
+
+        [Theory]
+        [InlineData(Flavor.Lime, "Price")]
+        [InlineData(Flavor.Limonada, "Price")]
+        [InlineData(Flavor.Tamarind, "Price")]
+        [InlineData(Flavor.Cucumber, "Price")]
+        [InlineData(Flavor.Strawberry, "Price")]
+        [InlineData(Flavor.Lime, "Calories")]
+        [InlineData(Flavor.Limonada, "Calories")]
+        [InlineData(Flavor.Tamarind, "Calories")]
+        [InlineData(Flavor.Cucumber, "Calories")]
+        [InlineData(Flavor.Strawberry, "Calories")]
+        [InlineData(Flavor.Lime, "Instructions")]
+        [InlineData(Flavor.Limonada, "Instructions")]
+        [InlineData(Flavor.Tamarind, "Instructions")]
+        [InlineData(Flavor.Cucumber, "Instructions")]
+        [InlineData(Flavor.Strawberry, "Instructions")]
+        public void ChangingFlavorShouldNotifyOfPropertyChanges(Flavor flavor, string propertyName)
+        {
+            AguaFresca drink = new();
+            Assert.PropertyChanged(drink, propertyName, () => { drink.DrinkFlavor = flavor; });
         }
     }
 }
