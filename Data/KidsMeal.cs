@@ -22,6 +22,12 @@ namespace BuildYourBowl.Data
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        protected void HandleItemPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Price)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Calories)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Instructions)));
+        }
 
         /// <summary>
         /// Abstract property that tracks the name of the meal
@@ -49,6 +55,9 @@ namespace BuildYourBowl.Data
                 if (value <= 5) _count = 5;
                 else if (value >= 8) _count = 8;
                 else _count = value;
+                OnPropertyChanged(nameof(Price));
+                OnPropertyChanged(nameof(Calories));
+                OnPropertyChanged(nameof(Instructions));
             }
         }
 
@@ -63,7 +72,13 @@ namespace BuildYourBowl.Data
         public Drink DrinkChoice
         {
             get => _drinkDefault;
-            set => _drinkDefault = value;
+            set
+            {
+                _drinkDefault = value;
+                OnPropertyChanged(nameof(Price));
+                OnPropertyChanged(nameof(Calories));
+                OnPropertyChanged(nameof(Instructions));
+            }
         }
 
         /// <summary>
@@ -77,7 +92,13 @@ namespace BuildYourBowl.Data
         public Side SideChoice
         {
             get => _sideDefault;
-            set => _sideDefault = value;
+            set
+            {
+                _sideDefault = value;
+                OnPropertyChanged(nameof(Price));
+                OnPropertyChanged(nameof(Calories));
+                OnPropertyChanged(nameof(Instructions));
+            }
         }
 
         /// <summary>
