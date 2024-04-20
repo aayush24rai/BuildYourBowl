@@ -18,7 +18,7 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// Name of this menu item
         /// </summary>
-        string Name { get; }
+        public string Name { get; }
 
         /// <summary>
         /// Descirption of this menu item
