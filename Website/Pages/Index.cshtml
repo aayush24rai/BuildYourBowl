@@ -1,0 +1,144 @@
+﻿@page
+@model IndexModel
+@using BuildYourBowl.Data;
+@using BuildYourBowl.Data.Enums;
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to Build Your Bowl!</h1>
+    <p>_greeting here!_</a>.</p>
+</div>
+
+<div>
+    <h2 id="entrees">Entrees</h2>
+    <ul>
+        @foreach (IMenuItem item in Menu.Entrees)
+        {
+            <li>
+                <p>Name: @item.Name</p>
+                <ul>
+                    @foreach (string info in item.Instructions)
+                    {
+                        <li>
+                            <p>@info</p>
+                        </li>
+                    }
+                </ul>
+                <p>Price: $@item.Price</p>
+                <p>Calories: @item.Calories</p>
+
+            </li>
+        }
+    </ul>
+
+</div>
+
+<div>
+    <h2 id="ingredients">Ingredients</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Calories</th>
+            <th>Additional Cost (build-your-owns)</th>
+        </tr>
+        @foreach (IngredientItem ingredient in Menu.Ingredients)
+        {
+            <tr>
+                <th>@ingredient.Name</th>
+                <th>@ingredient.Calories</th>
+                <th>$@ingredient.UnitCost</th>
+            </tr>
+        }
+    </table>
+
+</div>
+
+<div>
+    <h2>Salsas</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+        </tr>
+        @foreach (Salsa salsa in Menu.Salsas)
+        {
+            <tr>
+                <th>@salsa</th>
+            </tr>
+        }
+    </table>
+
+</div>
+
+<div>
+    <h2 id="sides">Sides</h2>
+    <ul>
+        @foreach (IMenuItem item in Menu.Sides)
+        {
+            <li>
+                <p>Name: @item.Name</p>
+                <ul>
+                    @foreach (string info in item.Instructions)
+                    {
+                        <li>
+                            <p>@info</p>
+                        </li>
+                    }
+                </ul>
+                <p>Price: $@item.Price</p>
+                <p>Calories: @item.Calories</p>
+
+            </li>
+        }
+    </ul>
+
+</div>
+
+<div>
+    <h2 id="drinks">Drinks</h2>
+    <ul>
+        @foreach (IMenuItem item in Menu.Drinks)
+        {
+            <li>
+                <p>Name: @item.Name</p>
+                <ul>
+                    @foreach (string info in item.Instructions)
+                    {
+                        <li>
+                            <p>@info</p>
+                        </li>
+                    }
+                </ul>
+                <p>Price: $@item.Price</p>
+                <p>Calories: @item.Calories</p>
+
+            </li>
+        }
+    </ul>
+
+</div>
+
+<div>
+    <h2 id="kidsmeals">Kids Meals</h2>
+    <ul>
+        @foreach (IMenuItem item in Menu.KidsMeals)
+        {
+            <li>
+                <p>Name: @item.Name</p>
+                <ul>
+                    @foreach (string info in item.Instructions)
+                    {
+                        <li>
+                            <p>@info</p>
+                        </li>
+                    }
+                </ul>
+                <p>Price: $@item.Price</p>
+                <p>Calories: @item.Calories</p>
+
+            </li>
+        }
+    </ul>
+
+</div>
