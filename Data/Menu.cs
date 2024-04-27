@@ -266,5 +266,314 @@ namespace BuildYourBowl.Data
                 return salsas;
             }
         }
+
+        public static IEnumerable<IMenuItem> All => FullMenu;
+
+        public static IEnumerable<IMenuItem> EntreeSearch(string termsList)
+        {
+            if (string.IsNullOrEmpty(termsList)) return Entrees;
+
+            string[] terms = termsList.ToLower().Split();
+
+            return Entrees.Where(menuItem =>
+                terms.All(term =>
+                    menuItem.Name.ToLower().Contains(term) ||
+                    menuItem.Instructions.Any(instruction => instruction.ToLower().Contains(term)) ||
+                    (menuItem is Entree entreeItem &&
+                     entreeItem.AdditionalIngredients.Any(ing => ing.Key.ToString().ToLower().Contains(term)))
+                ));
+        }
+
+
+
+        /*
+        public static IEnumerable<IMenuItem> EntreeSearch (string? termsList)
+        {
+            if (termsList == null) return Entrees;
+
+            List<IMenuItem> result = new List<IMenuItem>();
+
+            foreach (string term in termsList.Split())
+            {
+                foreach (IMenuItem menuItem in Entrees)
+                {
+                    //SEARCH AND FILTER FOR NAME
+                    if (menuItem.Name.ToLower().Split().Contains(term.ToLower())) result.Add(menuItem);
+
+                    //SEARCH AND FILTER FOR INSTRUCTIONS
+                    List<string> prepInfo = new();
+                    foreach (string info in menuItem.Instructions)
+                    {
+                        string[] infoSplit = info.ToLower().Split();
+                        foreach (string check in infoSplit) prepInfo.Add(check);
+                    }
+
+                    if (prepInfo.Contains(term.ToLower())) result.Add(menuItem);
+
+                    //SEARCH AND FILTER FOR ADDITIONAL INGREDIENTS
+                    if (menuItem is Entree entreeItem)
+                    {
+                        if ("Black Beans".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.BlackBeans)) result.Add(entreeItem);
+                        if ("Pinto Beans".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.PintoBeans)) result.Add(entreeItem);
+                        if ("Queso".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.Queso)) result.Add(entreeItem);
+                        if ("Veggies".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.Veggies)) result.Add(entreeItem);
+                        if ("Sour Cream".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.SourCream)) result.Add(entreeItem);
+                        if ("Guacamole".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.Guacamole)) result.Add(entreeItem);
+                        if ("Chicken".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.Chicken)) result.Add(entreeItem);
+                        if ("Steak".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.Steak)) result.Add(entreeItem);
+                        if ("Carnitas".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.Carnitas)) result.Add(entreeItem);
+                    }
+                }
+            }
+
+            return result;
+        }
+        */
+
+
+        public static IEnumerable<IMenuItem> SideSearch(string termsList)
+        {
+            if (termsList == null) return Sides;
+
+            List<IMenuItem> result = new List<IMenuItem>();
+
+            foreach (IMenuItem menuItem in Sides)
+            {
+                bool isValidSearch = false;
+
+                foreach (string term in termsList.Split())
+                {
+
+                    List<string> prepInfo = new ();
+                    foreach (string info in menuItem.Instructions)
+                    {
+                        string[] infoSplit = info.ToLower().Split();
+                        foreach (string check in infoSplit) prepInfo.Add(check);
+                    }
+
+                    if ((menuItem.Name.ToLower().Split().Contains(term.ToLower())) && (prepInfo.Contains(term.ToLower()))) isValidSearch = true;
+
+                    //prepInfo.Add(info.ToLower().Split());
+
+                    //TO USE
+                    /*
+                    if (menuItem.Name.ToLower().Split().Contains(term.ToLower())) result.Add(menuItem);
+
+                    if (prepInfo.Contains(term.ToLower())) result.Add(menuItem);
+                    */
+
+                    //if (Enumerable.Contains<string>(prepInfo, term.ToLower())) result.Add(menuItem);
+
+                    //if (Enumerable.Contains<string>(menuItem.Instructions, char.ToUpper(term[0]) + term.Substring(1).ToLower())) result.Add(menuItem);
+                }
+
+                if (isValidSearch) result.Add(menuItem);
+            }
+
+            return result;
+        }
+        public static IEnumerable<IMenuItem> DrinkSearch(string termsList)
+        {
+            if (termsList == null) return Drinks;
+
+            List<IMenuItem> result = new List<IMenuItem>();
+
+            foreach (string term in termsList.Split())
+            {
+                foreach (IMenuItem menuItem in Drinks)
+                {
+                    //SEARCH AND FILTER FOR NAME
+                    if (menuItem.Name.ToLower().Split().Contains(term.ToLower())) result.Add(menuItem);
+
+                    //SEARCH AND FILTER FOR INSTRUCTIONS
+                    List<string> prepInfo = new();
+                    foreach (string info in menuItem.Instructions)
+                    {
+                        string[] infoSplit = info.ToLower().Split();
+                        foreach (string check in infoSplit) prepInfo.Add(check);
+                    }
+
+                    if (prepInfo.Contains(term.ToLower())) result.Add(menuItem);
+
+                    //SEARCH AND FILTER FOR ADDITIONAL INGREDIENTS
+                    if (menuItem is Entree entreeItem)
+                    {
+                        if ("Black Beans".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.BlackBeans)) result.Add(entreeItem);
+                        if ("Pinto Beans".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.PintoBeans)) result.Add(entreeItem);
+                        if ("Queso".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.Queso)) result.Add(entreeItem);
+                        if ("Veggies".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.Veggies)) result.Add(entreeItem);
+                        if ("Sour Cream".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.SourCream)) result.Add(entreeItem);
+                        if ("Guacamole".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.Guacamole)) result.Add(entreeItem);
+                        if ("Chicken".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.Chicken)) result.Add(entreeItem);
+                        if ("Steak".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.Steak)) result.Add(entreeItem);
+                        if ("Carnitas".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.Carnitas)) result.Add(entreeItem);
+                    }
+                }
+            }
+
+            return result;
+        }
+        public static IEnumerable<IMenuItem> KidsMealSearch(string termsList)
+        {
+            if (termsList == null) return KidsMeals;
+
+            List<IMenuItem> result = new List<IMenuItem>();
+
+            foreach (string term in termsList.Split())
+            {
+                foreach (IMenuItem menuItem in KidsMeals)
+                {
+                    //SEARCH AND FILTER FOR NAME
+                    if (menuItem.Name.ToLower().Split().Contains(term.ToLower())) result.Add(menuItem);
+
+                    //SEARCH AND FILTER FOR INSTRUCTIONS
+                    List<string> prepInfo = new();
+                    foreach (string info in menuItem.Instructions)
+                    {
+                        string[] infoSplit = info.ToLower().Split();
+                        foreach (string check in infoSplit) prepInfo.Add(check);
+                    }
+
+                    if (prepInfo.Contains(term.ToLower())) result.Add(menuItem);
+
+                    //SEARCH AND FILTER FOR ADDITIONAL INGREDIENTS
+                    if (menuItem is Entree entreeItem)
+                    {
+                        if ("Black Beans".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.BlackBeans)) result.Add(entreeItem);
+                        if ("Pinto Beans".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.PintoBeans)) result.Add(entreeItem);
+                        if ("Queso".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.Queso)) result.Add(entreeItem);
+                        if ("Veggies".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.Veggies)) result.Add(entreeItem);
+                        if ("Sour Cream".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.SourCream)) result.Add(entreeItem);
+                        if ("Guacamole".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.Guacamole)) result.Add(entreeItem);
+                        if ("Chicken".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.Chicken)) result.Add(entreeItem);
+                        if ("Steak".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.Steak)) result.Add(entreeItem);
+                        if ("Carnitas".ToLower().Split().Contains(term.ToLower()) && entreeItem.AdditionalIngredients.ContainsKey(Ingredient.Carnitas)) result.Add(entreeItem);
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public static IEnumerable<IMenuItem> FilterByCalories(IEnumerable<IMenuItem> menuItems, double? min, double? max)
+        {
+            if (min == null && max == null) return menuItems;
+
+            if (min == null) return menuItems.Where(entreeItem => entreeItem.Calories <= max);
+            if (max == null) return menuItems.Where(entreeItem => entreeItem.Calories >= min);
+
+            return menuItems.Where(entreeItem => entreeItem.Calories >= min && entreeItem.Calories <= max);
+        }
+
+        public static IEnumerable<IMenuItem> FilterByPrice(IEnumerable<IMenuItem> menuItems, decimal? min, decimal? max)
+        {
+            if (min == null && max == null) return menuItems;
+
+            if (min == null) return menuItems.Where(entreeItem => entreeItem.Price <= max);
+            if (max == null) return menuItems.Where(entreeItem => entreeItem.Price >= min);
+
+            return menuItems.Where(entreeItem => entreeItem.Price >= min && entreeItem.Price <= max);
+        }
+
+
+        //IngredientSearch
+        /*
+        public static IEnumerable<IngredientItem> IngredientSearch(string termsList)
+        {
+            if (termsList == null) return Ingredients;
+
+            List<IngredientItem> result = new List<IngredientItem>();
+
+            foreach (string term in termsList.Split())
+            {
+                foreach (IngredientItem ingItem in Ingredients)
+                {
+                    if (menuItem.Name.ToLower().Split().Contains(term.ToLower())) result.Add(menuItem);
+
+                    if (Enumerable.Contains<string>(menuItem.Instructions, char.ToUpper(term[0]) + term.Substring(1).ToLower())) result.Add(menuItem);
+
+                }
+            }
+
+            return result;
+        }
+        */
+
+        
+        public static IEnumerable<IMenuItem> Search (string termsList)
+        {
+            
+            if (termsList == null) return All;
+
+            List<IMenuItem> result = new List<IMenuItem>();
+
+            foreach (string term in termsList.Split())
+            {
+                foreach (IMenuItem menuItem in All)
+                {
+                    if (menuItem.Name.ToLower().Split().Contains(term.ToLower())) result.Add(menuItem);
+
+                    if (Enumerable.Contains<string>(menuItem.Instructions, char.ToUpper(term[0]) + term.Substring(1).ToLower())) result.Add(menuItem);
+                    
+                    if (menuItem is Entree entreeItem)
+                    {
+                        if ("Black Beans".ToLower().Split().Contains(term.ToLower()) || entreeItem.AdditionalIngredients.ContainsKey(Ingredient.BlackBeans)) result.Add(entreeItem);
+                        if ("Pinto Beans".ToLower().Split().Contains(term.ToLower()) || entreeItem.AdditionalIngredients.ContainsKey(Ingredient.PintoBeans)) result.Add(entreeItem);
+                        if ("Queso".ToLower().Split().Contains(term.ToLower()) || entreeItem.AdditionalIngredients.ContainsKey(Ingredient.Queso)) result.Add(entreeItem);
+                        if ("Veggies".ToLower().Split().Contains(term.ToLower()) || entreeItem.AdditionalIngredients.ContainsKey(Ingredient.Veggies)) result.Add(entreeItem);
+                        if ("Sour Cream".ToLower().Split().Contains(term.ToLower()) || entreeItem.AdditionalIngredients.ContainsKey(Ingredient.SourCream)) result.Add(entreeItem);
+                        if ("Guacamole".ToLower().Split().Contains(term.ToLower()) || entreeItem.AdditionalIngredients.ContainsKey(Ingredient.Guacamole)) result.Add(entreeItem);
+                        if ("Chicken".ToLower().Split().Contains(term.ToLower()) || entreeItem.AdditionalIngredients.ContainsKey(Ingredient.Chicken)) result.Add(entreeItem);
+                        if ("Steak".ToLower().Split().Contains(term.ToLower()) || entreeItem.AdditionalIngredients.ContainsKey(Ingredient.Steak)) result.Add(entreeItem);
+                        if ("Carnitas".ToLower().Split().Contains(term.ToLower()) || entreeItem.AdditionalIngredients.ContainsKey(Ingredient.Carnitas)) result.Add(entreeItem);
+                    }
+                }
+            }
+
+            return result;
+            
+
+
+            /*
+            if (termsList != null)
+            {
+                foreach (string term in termsList.Split())
+                {
+                    foreach (IMenuItem menuItem in All)
+                    {
+                        if (menuItem is Entree entreeItem)
+                        {
+                            return All.Where(item => item.Name.ToLower().Split().Contains(term.ToLower()) || 
+                            Enumerable.Contains<string>(item.Instructions, char.ToUpper(term[0]) + term.Substring(1).ToLower()) );
+                        }
+                        
+
+                        return All.Where(item => item.Name.ToLower().Split().Contains(term.ToLower()) 
+                        || Enumerable.Contains<string>(item.Instructions, char.ToUpper(term[0]) + term.Substring(1).ToLower()));
+
+
+                    }
+                }
+            }
+            
+            return All;
+            */
+            
+
+            
+            /*
+            foreach (IMenuItem item in All)
+            {
+                foreach (string instruction in item.Instructions)
+                {
+                    if (item is Entree entree) return All.Where(item => item.Name == terms || instruction == terms || entree.AdditionalIngredients.ContainsValue(new IngredientItem(terms)));
+                    return All.Where(item => item.Name == terms || instruction == terms);
+                }
+            }
+            return All.Where(item => item.Name == terms || item.Instructions);
+            */
+
+        }
+        
     }
 }
