@@ -1,0 +1,29 @@
+﻿@page
+@model Website.Pages.ReviewsModel
+@{
+    ViewData["Title"] = "Reviews";
+}
+
+<form method="post">
+    <h1>Reviews</h1>
+
+    <textarea  cols="80" rows="10" name="ReviewText" placeholder="Enter review" value="@Model.ReviewText"></textarea>
+
+    <div>
+        <input type="submit" value="Submit">
+    </div>
+
+    <div>
+        <ul>
+            @foreach (Review review in Model.AllReviews)
+            {
+                <li>@review.Text</li>
+                <li>@review.PlacedAt</li>
+                <hr/>
+            }
+        </ul>
+    </div>
+
+</form>
+
+

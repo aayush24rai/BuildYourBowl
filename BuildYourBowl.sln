@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataTests", "DataTests\Data
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PointOfSale", "PointOfSale\PointOfSale.csproj", "{A90E652E-451A-4B80-8B1E-C9AD84C14F03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Website", "Website\Website.csproj", "{19EC1B13-536D-4448-B4AB-B8D03799DE5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Website", "Website\Website.csproj", "{19EC1B13-536D-4448-B4AB-B8D03799DE5A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8F6FB346-DC11-4AB6-B75A-A7F183FD89B3} = {8F6FB346-DC11-4AB6-B75A-A7F183FD89B3}
 	EndProjectSection
